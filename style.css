@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #120014;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.screen {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Card Lock Screen */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.code-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.code-dots span {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #ff79c6;
+    display: inline-block;
+}
+
+.code-dots span.filled {
+    background-color: #ff79c6;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+.keypad button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.keypad button:active {
+    background: #ff79c6;
+}
+
+.hint {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.error-msg {
+    color: #ff5555;
+    font-size: 12px;
+    margin-top: 8px;
+    height: 15px;
+}
+
+/* Gift Box Screen */
+.gift-container {
+    cursor: pointer;
+    animation: bounce 1.5s infinite;
+}
+
+.gift-box {
+    font-size: 100px;
+    margin-top: 20px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
