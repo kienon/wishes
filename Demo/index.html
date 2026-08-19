@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, Dalia 💖</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- FALLING FLOWERS CONTAINER -->
+    <div id="flower-container"></div>
+
+    <!-- 1. LOCK SCREEN -->
+    <div id="lock-screen" class="screen">
+        <div class="card">
+            <div class="icon">🌹</div>
+            <h2>For You, Dalia</h2>
+            <p class="subtitle">Enter the secret code</p>
+            
+            <div class="code-dots" id="code-dots">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="keypad">
+                <button onclick="pressNum('1')">1</button>
+                <button onclick="pressNum('2')">2</button>
+                <button onclick="pressNum('3')">3</button>
+                <button onclick="pressNum('4')">4</button>
+                <button onclick="pressNum('5')">5</button>
+                <button onclick="pressNum('6')">6</button>
+                <button onclick="pressNum('7')">7</button>
+                <button onclick="pressNum('8')">8</button>
+                <button onclick="pressNum('9')">9</button>
+                <button onclick="clearCode()">✕</button>
+                <button onclick="pressNum('0')">0</button>
+                <button onclick="submitCode()">↵</button>
+            </div>
+
+            <p class="hint">Hint: 111111 💜</p>
+            <p id="error-msg" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- 2. GIFT BOX SCREEN -->
+    <div id="gift-screen" class="screen hidden">
+        <div class="gift-container" onclick="openGift()">
+            <p>Tap the gift box to open it 🎁</p>
+            <div class="gift-box">🎁</div>
+        </div>
+    </div>
+
+    <!-- 3. MAIN PREMIUM CONTENT -->
+    <div id="main-content" class="screen hidden">
+        <div class="container">
+
+            <!-- HEADER -->
+            <header class="header">
+                <p class="tag">Your Special Day 🎂</p>
+                <h1>HAPPY BIRTHDAY DALIA</h1>
+                <p class="sub-header">Hari paling istimewa ✨</p>
+                <blockquote class="quote">
+                    "Wishing you happiness, good health, and all your dreams come true." 🤍
+                </blockquote>
+            </header>
+
+            <!-- DIGITAL BOUQUET -->
+            <section class="section">
+                <h3>A Digital Bouquet for You 💐</h3>
+                <p class="instruction">Touch each flower to reveal its message</p>
+                <div class="bouquet-grid">
+                    <button onclick="showFlowerMsg('🌸 Kamu adalah orang terindah yang pernah aku kenal!')">🌸</button>
+                    <button onclick="showFlowerMsg('🌷 Terima kasih sebab sentiasa ada & faham aku.')">🌷</button>
+                    <button onclick="showFlowerMsg('🌻 Senyuman kamu sentiasa mencerahkan hari aku.')">🌻</button>
+                    <button onclick="showFlowerMsg('🌹 Kamu selayaknya dapat semua kebahagiaan di dunia ni.')">🌹</button>
+                    <button onclick="showFlowerMsg('🌺 Semoga tahun ini membawa sejuta keberkahan!')">🌺</button>
+                </div>
+                <div id="flower-popup" class="flower-popup hidden"></div>
+            </section>
+
+            <!-- LOVE LETTER SECTION -->
+            <section class="section letter-box">
+                <h3>A Letter For You 💌</h3>
+                <p class="letter-to">Untuk seseorang yang paling manis dan cantik,</p>
+                <p class="letter-body">
+                    My dearest Dalia,<br><br>
+                    On this most special day, I want you to know that every single day with you is a gift beyond measure. You bring light into every corner of my life, even on the darkest days.<br><br>
+                    Thank you for being you — with all your uniqueness, the gentleness of your heart, and a spirit that never fades. On this birthday of yours, I wish that all your dreams come true!
+                </p>
+                <p class="signature">With all my love,<br><strong>Your Special Someone 💖</strong></p>
+            </section>
+
+            <!-- PHOTO MEMORIES -->
+            <section class="section">
+                <h3>Our Photo Memories 📸</h3>
+                <div class="photo-grid">
+                    <div class="photo-card" onclick="openPhoto('https://via.placeholder.com/400x500', 'I love you so much 💖')">
+                        <img src="https://via.placeholder.com/150" alt="Memory 1">
+                        <p>Special Moment ✨</p>
+                    </div>
+                    <div class="photo-card" onclick="openPhoto('https://via.placeholder.com/400x500', 'Kenangan manis kita 💕')">
+                        <img src="https://via.placeholder.com/150" alt="Memory 2">
+                        <p>Our First Date 🌹</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TIMELINE -->
+            <section class="section">
+                <h3>Memories We've Written Together 📖</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="date">The Very Beginning</span>
+                        <h4>First Time We Met 🌟</h4>
+                        <p>The day everything changed for the better.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">A Magical Moment</span>
+                        <h4>Our First Conversation 💬</h4>
+                        <p>The first words that started it all.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">Today</span>
+                        <h4>Your Very Special Day 🎂</h4>
+                        <p>Celebrating you, today and always.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MUSIC PLAYER -->
+            <section class="section music-card">
+                <h3>Special Playlist 🎵</h3>
+                <audio id="audio-player" src=""></audio>
+                <div class="player-controls">
+                    <p id="current-song-title">Pilih lagu di bawah 👇</p>
+                    <button id="play-btn" onclick="togglePlay()">▶ Play</button>
+                </div>
+                <ul class="playlist">
+                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 'Shape of My Heart - Backstreet Boys')">🎵 Shape of My Heart</li>
+                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', 'Angel Baby - Troye Sivan')">🎵 Angel Baby</li>
+                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', 'My Love - Westlife')">🎵 My Love</li>
+                </ul>
+            </section>
+
+            <!-- NOTE JAR -->
+            <section class="section jar-section">
+                <h3>Reasons I'm Grateful For You 🏺</h3>
+                <p>Tap the jar to pick a note 📝</p>
+                <div class="jar-icon" onclick="pickNote()">🏺</div>
+                <div id="jar-note-display" class="jar-note hidden"></div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- PHOTO MODAL POPUP -->
+    <div id="photo-modal" class="modal hidden" onclick="closePhoto()">
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="Full view">
+            <p id="modal-caption"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
