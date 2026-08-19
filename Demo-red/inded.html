@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary, Love! 💖</title>
+    
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- AUDIO PLAYER (BGM) -->
+    <audio id="bgm" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <!-- SCREEN 1: INTRO ENVELOPE -->
+    <div id="screen-intro" class="screen active">
+        <h1 class="romantic-title">Happy Anniversary, Love !</h1>
+        <div class="envelope-container" onclick="openEnvelope()">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body">
+                <div class="gold-wax-seal">🌹</div>
+            </div>
+        </div>
+        <p class="tap-hint">tap the envelope for the surprise...</p>
+    </div>
+
+    <!-- SCREEN 2: GIFTS MENU ("Gifts for you") -->
+    <div id="screen-menu" class="screen hidden">
+        <h1 class="menu-title">Gifts for you</h1>
+        <div class="gifts-grid">
+            <div class="gift-item" onclick="showScreen('screen-message')">
+                <div class="gift-icon">✉️</div>
+                <span>Message</span>
+            </div>
+            <div class="gift-item" onclick="showScreen('screen-memories')">
+                <div class="gift-icon">🧸</div>
+                <span>Memories</span>
+            </div>
+            <div class="gift-item" onclick="showScreen('screen-flowers')">
+                <div class="gift-icon">💐</div>
+                <span>Flowers</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: MESSAGE (LETTER & POLAROIDS) -->
+    <div id="screen-message" class="screen hidden scrollable">
+        <div class="message-card">
+            <div class="polaroid-row">
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="Couple">
+                </div>
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300" alt="Couple">
+                </div>
+            </div>
+            <h3 class="letter-heading">Happy Anniversary, my love. ❤️</h3>
+            <p class="letter-body">
+                Today marks another beautiful chapter of our journey together, and I honestly can't put into words how grateful I am to have you in my life. Through every smile, every laugh, every challenge, and every moment we've shared, you've become one of the most important parts of my world.<br><br>
+                Thank you for choosing me every single day. Thank you for your patience, your understanding, your love, and your constant support. Thank you for staying beside me even during the days when things weren't easy. Our relationship hasn't been perfect, but it's real, and that's what makes it so special to me.<br><br>
+                You are my comfort, my safe place, my best friend, and the person who makes ordinary days feel extraordinary. I love the little things about you—the way you make me smile without even trying, the way you listen to me, and the way you make me feel loved from miles away.<br><br>
+                Happy Anniversary, baby. Here's to all the memories we've made, all the lessons we've learned, and all the beautiful moments still waiting for us in the future. I love you more than words can ever explain!
+            </p>
+            <button class="back-btn" onclick="showScreen('screen-menu')">Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: MEMORIES -->
+    <div id="screen-memories" class="screen hidden scrollable">
+        <h1 class="romantic-title">Memories Made With You</h1>
+        <div class="memories-content">
+            <p class="memory-desc">
+                Every photo here tells a story—a moment filled with laughter, love, and memories that I'll always cherish. Looking back at these reminds me of how many beautiful moments we've shared together and how much joy you've brought into my life.
+            </p>
+            <div class="photo-cluster">
+                <div class="cluster-polaroid"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=200"></div>
+                <div class="cluster-polaroid"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=200"></div>
+                <div class="cluster-polaroid"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=200"></div>
+            </div>
+            <button class="back-btn" onclick="showScreen('screen-menu')">Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 5: FLOWERS & SONG -->
+    <div id="screen-flowers" class="screen hidden scrollable">
+        <div class="flower-card-wrapper">
+            <h2 class="song-header">Song for you</h2>
+            <div class="video-container">
+                <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="polaroid-side-row">
+                <div class="polaroid small"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=200"></div>
+            </div>
+            <button class="back-btn" onclick="showScreen('screen-menu')">Back</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
