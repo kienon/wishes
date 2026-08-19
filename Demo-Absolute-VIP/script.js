@@ -1,7 +1,21 @@
 const CORRECT_CODE = "111111";
 let currentInput = "";
 
-// PASSCODE LOGIC
+// GENERATE AMBIENT FLOATING STARS
+function initAmbientParticles() {
+    const container = document.getElementById("ambient-particles");
+    for (let i = 0; i < 25; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star-particle");
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.animationDelay = Math.random() * 5 + "s";
+        star.style.animationDuration = Math.random() * 4 + 4 + "s";
+        container.appendChild(star);
+    }
+}
+initAmbientParticles();
+
+// LOCK SCREEN
 function pressNum(num) {
     if (currentInput.length < 6) {
         currentInput += num;
@@ -28,7 +42,7 @@ function submitCode() {
         document.getElementById("lock-screen").classList.add("hidden");
         document.getElementById("gift-screen").classList.remove("hidden");
     } else {
-        document.getElementById("error-msg").innerText = "Invalid VIP Code 💜";
+        document.getElementById("error-msg").innerText = "Invalid Passcode ✦";
         clearCode();
     }
 }
@@ -36,23 +50,7 @@ function submitCode() {
 function openGift() {
     document.getElementById("gift-screen").classList.add("hidden");
     document.getElementById("main-content").classList.remove("hidden");
-    startFallingFlowers();
     startTogetherCounter();
-}
-
-// FALLING FLOWERS
-function startFallingFlowers() {
-    const container = document.getElementById("flower-container");
-    const flowers = ["✨", "💖", "🌸", "👑", "🌹"];
-    setInterval(() => {
-        const flower = document.createElement("div");
-        flower.classList.add("falling-flower");
-        flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
-        flower.style.left = Math.random() * 100 + "vw";
-        flower.style.animationDuration = Math.random() * 3 + 2 + "s";
-        container.appendChild(flower);
-        setTimeout(() => flower.remove(), 5000);
-    }, 300);
 }
 
 // TOGETHER COUNTER
@@ -78,29 +76,25 @@ function startTogetherCounter() {
 function checkAnswer(isCorrect) {
     const feedback = document.getElementById("quiz-feedback");
     if (isCorrect) {
-        feedback.style.color = "#d4af37";
-        feedback.innerText = "Correct! Secret Envelope Unlocked! ✨";
+        feedback.style.color = "#e6c875";
+        feedback.innerText = "Correct! Secret Envelope Unlocked ✨";
         document.getElementById("envelope-section").classList.remove("hidden");
     } else {
-        feedback.style.color = "#ff5555";
-        feedback.innerText = "Wrong answer! Try again 😜";
+        feedback.style.color = "#ff6b6b";
+        feedback.innerText = "Wrong answer, try again 😜";
     }
 }
 
-// ENVELOPE LOGIC (UPDATED: TOGGLE SHOW/HIDE LETTER)
+// ENVELOPE LOGIC
 function toggleEnvelope() {
-    const env = document.getElementById("envelope");
+    const env = document.querySelector(".luxury-envelope");
     const letter = document.getElementById("full-letter");
 
     env.classList.toggle("open");
 
     if (env.classList.contains("open")) {
-        // Jika sampul dibuka, tunjuk surat selepas animasi sampul bergerak
-        setTimeout(() => {
-            letter.classList.remove("hidden");
-        }, 400);
+        setTimeout(() => { letter.classList.remove("hidden"); }, 400);
     } else {
-        // Jika sampul ditutup, terus sembunyikan surat
         letter.classList.add("hidden");
     }
 }
@@ -111,14 +105,14 @@ function toggleVN() {
     const btn = document.getElementById("vn-btn");
     if (audio.paused) {
         audio.play();
-        btn.innerText = "⏸ Pause Voice Note";
+        btn.innerText = "⏸ Pause Voice Message";
     } else {
         audio.pause();
-        btn.innerText = "▶ Listen Voice Note";
+        btn.innerText = "▶ Play Voice Message";
     }
 }
 
-// BOUQUET, GALLERY, MUSIC, JAR
+// BOUQUET, GALLERY, MUSIC & JAR
 function showFlowerMsg(msg) {
     const popup = document.getElementById("flower-popup");
     popup.innerText = msg;
@@ -159,8 +153,8 @@ function pickNote() {
 // FIREWORKS
 function triggerFireworks() {
     confetti({
-        particleCount: 120,
-        spread: 80,
+        particleCount: 140,
+        spread: 90,
         origin: { y: 0.6 }
     });
 }
