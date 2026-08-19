@@ -29,16 +29,15 @@ body {
 /* MULTI-DEVICE RESPONSIVE CONTAINER */
 .screen {
     width: 100%;
-    max-width: 460px; /* Default Phone Width */
+    max-width: 460px;
     padding: 20px;
     text-align: center;
     transition: all 0.3s ease;
 }
 
-/* Laptop / Desktop Optimization (RM199 Feature) */
 @media (min-width: 768px) {
     .screen {
-        max-width: 650px; /* Lebar selesa untuk Tablet/Laptop */
+        max-width: 650px;
     }
     .photo-grid {
         gap: 20px;
@@ -130,6 +129,151 @@ body {
 }
 .envelope.open .letter { transform: translateY(-60px); z-index: 4; }
 
+/* REAL BOUQUET SHAPE STYLING */
+.real-bouquet-container {
+    position: relative;
+    width: 260px;
+    height: 280px;
+    margin: 20px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.paper-wrap {
+    width: 140px;
+    height: 150px;
+    background: linear-gradient(135deg, #bf953f, #e8c87b);
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    position: absolute;
+    bottom: 20px;
+    z-index: 2;
+}
+
+.ribbon {
+    position: absolute;
+    bottom: 30px;
+    z-index: 4;
+    font-size: 32px;
+}
+
+.flowers-group {
+    position: absolute;
+    top: 10px;
+    width: 220px;
+    height: 180px;
+    z-index: 3;
+}
+
+.flower-btn {
+    position: absolute;
+    font-size: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.flower-btn:hover, .flower-btn:active {
+    transform: scale(1.3) rotate(10deg);
+}
+
+.f1 { top: 10px; left: 85px; }
+.f2 { top: 35px; left: 30px; }
+.f3 { top: 35px; left: 140px; }
+.f4 { top: 80px; left: 55px; }
+.f5 { top: 80px; left: 115px; }
+
+.flower-popup {
+    margin-top: 20px;
+    background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728);
+    color: #120014;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 13px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    animation: fadeIn 0.4s ease;
+}
+
+/* INTERACTIVE STORY CAROUSEL (OUR JOURNEY STORY) */
+.story-carousel {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 15px 5px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #d4af37 transparent;
+}
+
+.story-carousel::-webkit-scrollbar {
+    height: 6px;
+}
+.story-carousel::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 10px;
+}
+
+.story-card {
+    flex: 0 0 200px;
+    scroll-snap-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    border-color: #fcf6ba;
+}
+
+.story-badge {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    background: #d4af37;
+    color: #120014;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.story-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.story-card h4 {
+    font-size: 13px;
+    color: #fcf6ba;
+    margin-top: 8px;
+}
+
+.story-date {
+    font-size: 10px;
+    color: #d4af37;
+    margin-bottom: 5px;
+}
+
+.story-desc {
+    font-size: 11px;
+    color: #ccc;
+    line-height: 1.3;
+}
+
 /* BUTTONS */
 #vn-btn, .fireworks-btn {
     background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728);
@@ -137,16 +281,15 @@ body {
     font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
 }
 
-/* BOUQUET, GALLERY, TIMELINE */
-.bouquet-grid { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
-.bouquet-grid button { font-size: 28px; background: none; border: none; cursor: pointer; }
-.flower-popup { background: #d4af37; color: #000; padding: 10px; border-radius: 10px; font-size: 12px; margin-top: 10px; }
-
+/* GALLERY */
 .photo-grid { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
 .photo-card img { width: 120px; height: 120px; border-radius: 10px; object-fit: cover; border: 1px solid #d4af37; }
-
-.timeline { text-align: left; border-left: 2px solid #d4af37; padding-left: 12px; margin-top: 10px; }
 
 /* MODAL POPUP */
 .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; }
 .modal-content img { width: 80vw; max-width: 400px; border-radius: 10px; border: 2px solid #d4af37; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
