@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whimsical Birthday Gift — For Dalia 💖</title>
     
-    <!-- GOOGLE FONTS FOR WHIMSICAL WATERCOLOR AESTHETIC -->
+    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -16,129 +16,129 @@
 </head>
 <body>
 
-    <!-- PHASE 1: INTRO ENVELOPE & FULLSCREEN FLOWER BLOOM -->
-    <div id="phase-intro" class="phase-container">
-        <div class="intro-box" onclick="triggerFlowerBloom()">
-            <div class="envelope-art">✉️</div>
-            <p class="handwritten-sub">Tap the envelope to open</p>
+    <!-- SCENE 1: ENVELOPE & FULLSCREEN FLOWER BLOOM EXPLOSION -->
+    <div id="scene-intro" class="scene-screen">
+        <div class="intro-envelope-box" onclick="triggerFlowerBloom()">
+            <div class="envelope-art">💌</div>
+            <p class="handwritten-hint">Tap to open</p>
         </div>
 
-        <!-- FULLSCREEN BLOOM OVERLAY -->
-        <div id="bloom-overlay" class="bloom-overlay hidden" onclick="goToGiftPhase()">
-            <div class="bloom-flower-cluster"></div>
-            <div class="bloom-content">
-                <p class="tap-reveal-text">Tap to reveal ✨</p>
+        <!-- FLOWER BLOOM OVERLAY -->
+        <div id="flower-bloom-overlay" class="bloom-overlay hidden" onclick="goToGiftScene()">
+            <div class="bloom-flowers-bg">
+                <span class="f-item f1">🌸</span>
+                <span class="f-item f2">🌹</span>
+                <span class="f-item f3">🌻</span>
+                <span class="f-item f4">🌺</span>
+                <span class="f-item f5">🌷</span>
+                <span class="f-item f6">🌼</span>
+                <span class="f-item f7">🌸</span>
+                <span class="f-item f8">🌹</span>
+            </div>
+            <div class="reveal-btn-container">
+                <button class="tap-reveal-btn">Tap to reveal ✨</button>
             </div>
         </div>
     </div>
 
-    <!-- PHASE 2: GIFT UNBOXING -->
-    <div id="phase-gift" class="phase-container hidden">
-        <div class="pastel-cloud-bg"></div>
-        <div class="gift-box-card" onclick="goToDashboardPhase()">
-            <div class="gift-illustration">🎁</div>
-            <p class="handwritten-title">Tap the gift box for a surprise</p>
+    <!-- SCENE 2: GIFT UNBOXING -->
+    <div id="scene-gift" class="scene-screen hidden">
+        <div class="pastel-watercolor-bg"></div>
+        <div class="gift-box-wrapper" onclick="goToDashboardScene()">
+            <div class="gift-icon-anim">🎁</div>
+            <p class="gift-caption">Tap the gift box for a surprise</p>
         </div>
     </div>
 
-    <!-- PHASE 3: MAIN AESTHETIC DASHBOARD -->
-    <div id="phase-dashboard" class="phase-container hidden">
-        <div class="dashboard-bg"></div>
+    <!-- SCENE 3: MAIN DASHBOARD (CAKE, WIDGETS, FLIPBOOK, LETTER) -->
+    <div id="scene-dashboard" class="scene-screen hidden">
+        <div class="dashboard-watercolor-bg"></div>
 
-        <div class="dashboard-layout">
+        <div class="dashboard-main-container">
             
             <!-- LEFT COLUMN: FLOATING WIDGET STACK -->
-            <div class="left-widget-stack">
+            <div class="floating-left-widgets">
                 
-                <!-- WIDGET 1: SPOTIFY MUSIC PLAYER -->
-                <div class="glass-widget music-widget">
-                    <div class="music-header">
-                        <span class="music-icon">🎵</span>
-                        <div class="music-meta">
-                            <strong>Die With A Smile</strong>
-                            <p>Lady Gaga, Bruno Mars</p>
-                        </div>
+                <!-- WIDGET 1: MUSIC PLAYER -->
+                <div class="pastel-widget music-card">
+                    <div class="song-meta">
+                        <strong>Die With A Smile</strong>
+                        <p>Lady Gaga, Bruno Mars</p>
                     </div>
-                    <div class="player-controls">
-                        <button onclick="toggleMusic()" id="music-play-btn">▶ Play</button>
-                        <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-                    </div>
+                    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+                    <button onclick="toggleMusic()" id="music-btn">▶ Play Preview</button>
                 </div>
 
                 <!-- WIDGET 2: MEMORY MAP -->
-                <div class="glass-widget map-widget">
-                    <div class="widget-header">
-                        <span>📍 Memory Map</span>
-                    </div>
-                    <div class="map-frame">
-                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=400" alt="Memory Map">
-                        <p class="map-caption">Where our story began...</p>
+                <div class="pastel-widget map-card">
+                    <div class="widget-head">🗺️ Memory Map</div>
+                    <div class="map-preview">
+                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=400" alt="Map">
+                        <span>📍 Where we first met</span>
                     </div>
                 </div>
 
-                <!-- WIDGET 3: VOICE NOTE PLAYER -->
-                <div class="glass-widget vn-widget">
-                    <div class="vn-header">
-                        <span>🎙️ A soft little message</span>
-                        <span class="duration">0:14</span>
-                    </div>
-                    <button onclick="toggleVN()" id="vn-play-btn">▶ Listen Voice Note</button>
+                <!-- WIDGET 3: VOICE NOTE -->
+                <div class="pastel-widget vn-card">
+                    <p class="vn-title">🎙️ A soft little message</p>
                     <audio id="vn-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"></audio>
+                    <button onclick="toggleVN()" id="vn-btn">▶ Play (0:14)</button>
                 </div>
 
-                <!-- WIDGET 4: YOUTUBE VIDEO EMBED -->
-                <div class="glass-widget youtube-widget">
-                    <p class="yt-title">🎬 John Legend - All of Me</p>
-                    <div class="yt-frame-placeholder" onclick="playYTDemo()">
-                        <span>▶ Watch Special Video</span>
+                <!-- WIDGET 4: YOUTUBE -->
+                <div class="pastel-widget yt-card">
+                    <p>🎬 John Legend - All of Me</p>
+                    <div class="yt-box" onclick="alert('Playing Special Song Video 🎵')">
+                        <span>▶ Watch Video</span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- RIGHT COLUMN: CENTERPIECE CONTENT TABS -->
-            <div class="right-centerpiece">
+            <!-- RIGHT COLUMN: DYNAMIC TABS -->
+            <div class="right-interactive-area">
                 
-                <!-- TAB 1: BIRTHDAY CAKE -->
-                <div id="tab-cake" class="tab-pane">
-                    <h1 class="script-heading">Happy Birthday</h1>
-                    <h2 class="sub-script-heading">My Love 💖</h2>
-                    <div class="cake-container" onclick="blowCandle()">
-                        <div class="flame" id="candle-flame">🔥</div>
-                        <div class="cake-art">🎂</div>
+                <!-- TAB A: BIRTHDAY CAKE -->
+                <div id="tab-cake" class="tab-content-box">
+                    <h1 class="script-title">Happy Birthday</h1>
+                    <h2 class="script-sub">My Love 💖</h2>
+                    
+                    <div class="interactive-cake" onclick="blowCandle()">
+                        <div class="flame-glow" id="candle-flame">🔥</div>
+                        <div class="cake-illustration">🎂</div>
                     </div>
-                    <p class="candle-hint" id="candle-hint">Tap the cake to blow out candles ✨</p>
+                    <p class="cake-hint" id="cake-hint">💨 Tap the cake to blow out candles</p>
                 </div>
 
-                <!-- TAB 2: 3D FLIP PHOTO ALBUM -->
-                <div id="tab-album" class="tab-pane hidden">
-                    <div class="album-container" onclick="nextAlbumPage()">
-                        <div class="album-cover" id="album-cover">
+                <!-- TAB B: 3D FLIPBOOK PHOTO ALBUM -->
+                <div id="tab-album" class="tab-content-box hidden">
+                    <div class="flipbook-wrapper" onclick="turnAlbumPage()">
+                        <div class="album-cover-face" id="album-cover">
                             <h3>Happy Birthday</h3>
                             <p>PHOTO ALBUM 📖</p>
-                            <span class="tap-page-hint">Tap to flip page</span>
+                            <span class="flip-hint">(Tap to flip page)</span>
                         </div>
-                        <div class="album-page hidden" id="album-page-1">
-                            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500" alt="Photo 1">
-                            <p class="page-caption">Our First Date 🌹</p>
+                        <div class="album-page-face hidden" id="album-p1">
+                            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500" alt="Memory">
+                            <p>Our First Date 🌹</p>
                         </div>
-                        <div class="album-page hidden" id="album-page-2">
-                            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500" alt="Photo 2">
-                            <p class="page-caption">Sweetest Smile ✨</p>
+                        <div class="album-page-face hidden" id="album-p2">
+                            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500" alt="Memory">
+                            <p>Your Sweetest Smile ✨</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- TAB 3: WAX SEAL LETTER -->
-                <div id="tab-letter" class="tab-pane hidden">
-                    <div class="wax-seal-envelope" onclick="openWaxLetter()">
-                        <div class="wax-seal-btn">💖</div>
-                        <p class="wax-hint">Tap wax seal to open</p>
+                <!-- TAB C: WAX SEAL SLIDING LETTER -->
+                <div id="tab-letter" class="tab-content-box hidden">
+                    <div class="wax-envelope-card" onclick="openWaxLetter()">
+                        <div class="wax-seal">💖</div>
+                        <p>Tap to read letter</p>
                     </div>
                     
-                    <div class="sliding-letter hidden" id="sliding-letter">
+                    <div class="sliding-letter-card hidden" id="sliding-letter">
                         <h3>Dear Dalia,</h3>
-                        <p class="letter-text">
+                        <p class="letter-body-text">
                             Today is such a special day — the day someone wonderful like you came into this world. Meeting you is the luckiest thing in my life.
                             <br><br>
                             May you always be happy, radiant, and right here beside me. Loving you more every single day! 🎂✨
@@ -150,31 +150,31 @@
 
         </div>
 
-        <!-- FLOATING BOTTOM NAVIGATION BAR -->
-        <nav class="bottom-nav-bar">
-            <button onclick="switchTab('cake')" class="nav-btn active" id="nav-cake">🎂</button>
-            <button onclick="switchTab('album')" class="nav-btn" id="nav-album">📖</button>
-            <button onclick="switchTab('letter')" class="nav-btn" id="nav-letter">✉️</button>
-            <button onclick="triggerFinalePhase()" class="nav-btn highlight">✨</button>
+        <!-- BOTTOM NAV BAR -->
+        <nav class="bottom-floating-nav">
+            <button onclick="switchTab('cake')" class="nav-icon-btn active" id="btn-cake">🎂</button>
+            <button onclick="switchTab('album')" class="nav-icon-btn" id="btn-album">📖</button>
+            <button onclick="switchTab('letter')" class="nav-icon-btn" id="btn-letter">✉️</button>
+            <button onclick="triggerFinaleScene()" class="nav-icon-btn highlight">✨</button>
         </nav>
     </div>
 
-    <!-- PHASE 4: 3D PHOTO CUBE & SPARKLING FINALE -->
-    <div id="phase-finale" class="phase-container hidden">
-        <div class="dark-space-bg">
-            <h1 class="finale-title">For My Love 💖</h1>
+    <!-- SCENE 4: 3D PHOTO CUBE & SPARKLING FINALE -->
+    <div id="scene-finale" class="scene-screen hidden">
+        <div class="dark-space-container">
+            <h1 class="glow-script-title">For My Love 💖</h1>
             
-            <!-- 3D ROTATING PHOTO CUBE -->
-            <div class="cube-stage">
-                <div class="cube-3d" id="cube-3d">
-                    <div class="face front"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="Cube 1"></div>
-                    <div class="face back"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300" alt="Cube 2"></div>
-                    <div class="face right"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300" alt="Cube 3"></div>
-                    <div class="face left"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="Cube 4"></div>
+            <!-- 3D ROTATING CUBE -->
+            <div class="cube-3d-stage">
+                <div class="cube-3d-object">
+                    <div class="cube-face front"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="1"></div>
+                    <div class="cube-face back"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300" alt="2"></div>
+                    <div class="cube-face right"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300" alt="3"></div>
+                    <div class="cube-face left"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="4"></div>
                 </div>
             </div>
 
-            <button onclick="restartDemo()" class="replay-btn">🔄 Replay Experience</button>
+            <button onclick="replaySurprise()" class="replay-btn">🔄 Replay Surprise</button>
         </div>
     </div>
 
