@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic Scrapbook Flipbook — Kienon Wishes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- PageFlip Library (CDN) untuk kesan selak buku sebenar -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #d8e2dc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 20px;
+        }
+        .font-handwriting { font-family: 'Caveat', cursive; }
+        
+        /* Flipbook Container Shadow */
+        #book-container {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-radius: 8px;
+        }
+
+        /* Scrapbook Page Styling */
+        .page {
+            background-color: #f4f7f4;
+            background-image: radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+            overflow: hidden;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid #e2e8f0;
+        }
+        .polaroid {
+            background: white;
+            padding: 8px 8px 24px 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+        .polaroid:hover { transform: rotate(0deg) scale(1.02); }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HEADER TITLE -->
+    <div class="text-center mb-4">
+        <span class="bg-[#93a8ac] text-white text-[10px] tracking-widest uppercase px-3 py-1 rounded-full font-semibold">Interactive Flipbook Demo</span>
+        <h1 class="font-handwriting text-3xl md:text-4xl text-[#2f3e46] mt-1">Our Scrapbook Memories 📖✨</h1>
+        <p class="text-xs text-[#52796f]">Gunakan tetikus untuk selak (Desktop) atau swipe (Phone)</p>
+    </div>
+
+    <!-- FLIPBOOK WRAPPER -->
+    <div id="book-container">
+        <div id="demo-book">
+
+            <!-- PAGE 1: FRONT COVER -->
+            <div class="page bg-[#eef4ed] items-center justify-center text-center relative">
+                <div class="absolute inset-4 border-2 border-dashed border-[#93a8ac]/50 rounded-xl flex flex-col items-center justify-center p-6">
+                    <div class="w-24 h-24 bg-[#93a8ac]/20 rounded-full flex items-center justify-center text-4xl mb-4">📸</div>
+                    <h2 class="font-handwriting text-4xl text-[#2f3e46] mb-2">HAPPY BIRTHDAY</h2>
+                    <p class="text-xs text-[#52796f] tracking-widest uppercase font-semibold">Special Digital Edition</p>
+                    <div class="mt-8 text-[11px] bg-[#2f3e46] text-white px-4 py-2 rounded-full shadow-md animate-pulse">👉 Selak Muka Surat</div>
+                </div>
+            </div>
+
+            <!-- PAGE 2: INSIDE LEFT (Letter & Notes) -->
+            <div class="page">
+                <div>
+                    <h3 class="font-handwriting text-2xl text-[#2f3e46] border-b border-[#93a8ac]/30 pb-1 mb-3">Dearest Dalia, 💖</h3>
+                    <p class="text-[11px] text-[#354f52] leading-relaxed mb-3">
+                        On this special day, I just want to take a moment to celebrate the wonderful person that you are. Thank you for bringing so much happiness and positivity into my life. Every single day with you is a blessing.
+                    </p>
+                    <p class="text-[11px] text-[#354f52] leading-relaxed">
+                        May your year ahead be filled with endless success, great health, and beautiful moments.
+                    </p>
+                </div>
+                <div class="polaroid w-36 mx-auto mt-2">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" class="w-full h-28 object-cover">
+                    <p class="font-handwriting text-center text-xs text-slate-600 mt-1">Our sweet memory</p>
+                </div>
+            </div>
+
+            <!-- PAGE 3: INSIDE RIGHT (Photos & Spotify Vibe) -->
+            <div class="page items-center justify-between">
+                <div class="w-full text-center">
+                    <span class="text-[10px] bg-[#93a8ac]/20 text-[#2f3e46] px-2 py-0.5 rounded font-bold">FEATURING</span>
+                    <h4 class="font-handwriting text-xl text-[#2f3e46] mt-1">A Song That Reminds Me Of You</h4>
+                </div>
+                <!-- Vinyl Graphic -->
+                <div class="w-28 h-28 bg-slate-900 rounded-full border-4 border-slate-700 flex items-center justify-center shadow-lg relative my-2">
+                    <div class="w-10 h-10 bg-[#93a8ac] rounded-full flex items-center justify-center text-white text-xs font-bold">♫</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 w-full mt-2">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300" class="w-full h-20 object-cover rounded shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300" class="w-full h-20 object-cover rounded shadow-sm">
+                </div>
+            </div>
+
+            <!-- PAGE 4: BACK COVER -->
+            <div class="page bg-[#eef4ed] items-center justify-center text-center">
+                <div class="text-6xl mb-3">✨</div>
+                <h3 class="font-handwriting text-3xl text-[#2f3e46] mb-1">Forever & Always</h3>
+                <p class="text-xs text-[#52796f] max-w-[200px] mb-6">Terima kasih kerana membaca buku kenangan ini. Dicipta khas dengan penuh kasih sayang.</p>
+                <a href="https://wa.me/" target="_blank" class="bg-[#2f3e46] text-white text-xs font-medium px-6 py-2.5 rounded-full shadow hover:bg-[#354f52] transition-all">
+                    Tempah Versi Anda 💬
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- NAVIGATION CONTROLS (Optional Extra UX for Mobile/Desktop) -->
+    <div class="flex gap-4 mt-5">
+        <button onclick="prevPage()" class="bg-white text-[#2f3e46] px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-slate-100 transition-all">← Prev</button>
+        <button onclick="nextPage()" class="bg-[#2f3e46] text-white px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-[#354f52] transition-all">Next →</button>
+    </div>
+
+    <!-- SCRIPT INITIALIZATION -->
+    <script>
+        let pageFlip;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const bookElement = document.getElementById('demo-book');
+            
+            // Auto responsive sizing based on device screen width
+            let bookWidth = window.innerWidth < 768 ? 320 : 400;
+            let bookHeight = window.innerWidth < 768 ? 450 : 550;
+
+            pageFlip = new St.PageFlip(bookElement, {
+                width: bookWidth,
+                height: bookHeight,
+                showCover: true,
+                maxShadowOpacity: 0.5,
+                mobileScrollSupport: false,
+                usePortrait: window.innerWidth < 768 // Portrait 1 page on mobile, Spread 2 pages on desktop/tablet
+            });
+
+            // Load pages from HTML children
+            pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+        });
+
+        function nextPage() {
+            if (pageFlip) pageFlip.flipNext();
+        }
+
+        function prevPage() {
+            if (pageFlip) pageFlip.flipPrev();
+        }
+    </script>
+</body>
+</html>
