@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Girl 💖</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts & Lucide Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#0d0205] text-[#fceade] min-h-screen flex flex-col items-center justify-center p-4 overflow-x-hidden select-none">
+
+    <!-- 1. LOCKED / PASSCODE SCREEN -->
+    <div id="screen-lock" class="flex flex-col items-center max-w-sm w-full bg-[#16050a]/80 backdrop-blur-md p-6 rounded-3xl border border-[#3d0d1b] shadow-2xl transition-all duration-500">
+        <div onclick="toggleModal(true)" class="w-20 h-20 rounded-full border-2 border-[#e63946] overflow-hidden cursor-pointer hover:scale-105 transition-transform shadow-lg mb-4 relative group">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Hint Avatar" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs text-white">View</div>
+        </div>
+
+        <h1 class="text-xl font-bold tracking-widest text-[#ff708d] mb-1">LOCKED</h1>
+        <p class="text-xs text-neutral-400 mb-6">Hint - Click on picture to know passcode!</p>
+
+        <!-- Passcode Dots -->
+        <div id="dots-container" class="flex gap-3 mb-8">
+            <div class="dot w-3.5 h-3.5 rounded-full border border-[#ff708d] transition-all duration-300"></div>
+            <div class="dot w-3.5 h-3.5 rounded-full border border-[#ff708d] transition-all duration-300"></div>
+            <div class="dot w-3.5 h-3.5 rounded-full border border-[#ff708d] transition-all duration-300"></div>
+            <div class="dot w-3.5 h-3.5 rounded-full border border-[#ff708d] transition-all duration-300"></div>
+        </div>
+
+        <!-- Keypad -->
+        <div class="grid grid-cols-3 gap-4 w-full max-w-[260px]">
+            <button onclick="pressNum(1)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">1</button>
+            <button onclick="pressNum(2)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">2</button>
+            <button onclick="pressNum(3)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">3</button>
+            <button onclick="pressNum(4)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">4</button>
+            <button onclick="pressNum(5)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">5</button>
+            <button onclick="pressNum(6)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">6</button>
+            <button onclick="pressNum(7)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">7</button>
+            <button onclick="pressNum(8)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">8</button>
+            <button onclick="pressNum(9)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">9</button>
+            <button onclick="clearPass()" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-xs font-medium text-neutral-400 border border-[#3d0d1b] flex items-center justify-center">Clear</button>
+            <button onclick="pressNum(0)" class="h-14 rounded-2xl bg-[#220710] hover:bg-[#330a17] active:scale-95 transition-all text-lg font-semibold text-neutral-200 border border-[#3d0d1b] shadow-md">0</button>
+            <div class="h-14 flex items-center justify-center text-neutral-600 font-bold">🔒</div>
+        </div>
+    </div>
+
+    <!-- HINT IMAGE MODAL -->
+    <div id="modal-hint" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-[#16050a] border border-[#3d0d1b] rounded-3xl p-4 max-w-xs w-full relative shadow-2xl flex flex-col items-center">
+            <button onclick="toggleModal(false)" class="absolute top-3 right-3 text-neutral-400 hover:text-white bg-[#220710] p-1.5 rounded-full">✕</button>
+            <div class="w-full h-72 rounded-2xl overflow-hidden mb-3 border border-[#3d0d1b]">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600" alt="Passkey hint" class="w-full h-full object-cover">
+            </div>
+            <div class="bg-[#220710] border border-[#3d0d1b] w-full py-2 rounded-xl text-center text-xs tracking-widest text-[#ff708d] font-bold">PASSKEY - 2026</div>
+        </div>
+    </div>
+
+    <!-- 2. LOADING SCREEN -->
+    <div id="screen-loading" class="flex flex-col items-center justify-center text-center hidden">
+        <div class="text-4xl mb-3 animate-bounce">🐼</div>
+        <h2 class="text-lg font-semibold text-[#ff708d] mb-1">Hmm</h2>
+        <p class="text-sm text-neutral-400 tracking-wide mb-6">Loading something special...</p>
+        <div class="w-48 h-1 bg-[#220710] rounded-full overflow-hidden">
+            <div class="w-full h-full bg-[#ff708d] animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- 3. START / SPECIAL DAY INTRO -->
+    <div id="screen-start" class="flex flex-col items-center justify-center text-center max-w-md p-6 hidden">
+        <div class="text-4xl mb-4">🐼🌸</div>
+        <h1 class="text-2xl md:text-3xl font-serif text-neutral-100 mb-2">It's Your Special Day</h1>
+        <p class="text-xs md:text-sm text-neutral-400 mb-8">I made something special for you...</p>
+        <button onclick="switchScreen('screen-milestone')" class="px-8 py-3 rounded-full bg-gradient-to-r from-[#e63946] to-[#ff708d] text-white font-medium text-sm shadow-lg hover:scale-105 active:scale-95 transition-all">START ✨</button>
+    </div>
+
+    <!-- 4. MILESTONE COUNTER -->
+    <div id="screen-milestone" class="flex flex-col items-center justify-center text-center max-w-md p-6 hidden">
+        <div class="text-4xl mb-4">🐱🤍</div>
+        <h2 class="text-xl md:text-2xl font-serif text-neutral-100 mb-6">Happy Birthday My Girl</h2>
+        <p class="text-xs uppercase tracking-widest text-neutral-400 mb-4">You have completed</p>
+        
+        <div class="flex items-center justify-center gap-6 md:gap-8 my-4 bg-[#16050a] border border-[#3d0d1b] px-6 py-5 rounded-2xl shadow-xl w-full">
+            <div class="flex flex-col items-center"><span class="text-3xl md:text-4xl font-bold text-[#ff708d]">19</span><span class="text-[10px] tracking-wider text-neutral-500 uppercase mt-1">Years</span></div>
+            <div class="w-[1px] h-10 bg-[#3d0d1b]"></div>
+            <div class="flex flex-col items-center"><span class="text-3xl md:text-4xl font-bold text-[#ff708d]">0</span><span class="text-[10px] tracking-wider text-neutral-500 uppercase mt-1">Months</span></div>
+            <div class="w-[1px] h-10 bg-[#3d0d1b]"></div>
+            <div class="flex flex-col items-center"><span class="text-3xl md:text-4xl font-bold text-[#ff708d]">19</span><span class="text-[10px] tracking-wider text-neutral-500 uppercase mt-1">Days</span></div>
+        </div>
+
+        <button onclick="switchScreen('screen-memories')" class="mt-8 px-8 py-3 rounded-full bg-gradient-to-r from-[#e63946] to-[#ff708d] text-white font-medium text-sm shadow-lg hover:scale-105 active:scale-95 transition-all">NEXT ➔</button>
+    </div>
+
+    <!-- 5. SPECIAL MEMORIES GALLERY -->
+    <div id="screen-memories" class="flex flex-col items-center w-full max-w-xl p-4 hidden">
+        <h2 class="text-xl md:text-2xl font-serif text-neutral-100 mb-1">Special Memories</h2>
+        <p class="text-xs text-neutral-400 mb-6">Swipe for more</p>
+
+        <div class="flex gap-4 overflow-x-auto w-full pb-6 pt-2 px-2 scrollbar-none snap-x">
+            <div class="flex-shrink-0 w-64 h-80 rounded-3xl overflow-hidden border-2 border-[#ff708d]/40 shadow-lg snap-center"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" class="w-full h-full object-cover"></div>
+            <div class="flex-shrink-0 w-64 h-80 rounded-3xl overflow-hidden border-2 border-[#ff708d]/40 shadow-lg snap-center"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500" class="w-full h-full object-cover"></div>
+            <div class="flex-shrink-0 w-64 h-80 rounded-3xl overflow-hidden border-2 border-[#ff708d]/40 shadow-lg snap-center"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500" class="w-full h-full object-cover"></div>
+            <div class="flex-shrink-0 w-64 h-80 rounded-3xl overflow-hidden border-2 border-[#ff708d]/40 shadow-lg snap-center"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500" class="w-full h-full object-cover"></div>
+        </div>
+
+        <button onclick="switchScreen('screen-letter')" class="mt-6 px-6 py-3 rounded-full bg-[#16050a] border border-[#3d0d1b] hover:border-[#ff708d] text-neutral-200 text-xs tracking-widest uppercase transition-all shadow-lg">💌 ... MESSAGE</button>
+    </div>
+
+    <!-- 6. LETTER / JUST FOR YOU -->
+    <div id="screen-letter" class="flex flex-col items-center justify-center text-center max-w-md w-full p-4 hidden">
+        <h2 class="text-xl md:text-2xl font-serif text-neutral-100 mb-1">A LETTER, JUST FOR YOU</h2>
+        <p class="text-xs text-neutral-400 mb-8">Tap the heart to unseal your message...</p>
+
+        <!-- Unseal Trigger -->
+        <div id="heart-trigger" onclick="openLetter()" class="w-32 h-32 rounded-3xl bg-[#16050a] border border-[#3d0d1b] shadow-2xl flex flex-col items-center justify-center cursor-pointer hover:border-[#ff708d] transition-all group my-6">
+            <div class="w-12 h-12 rounded-full bg-[#ff708d]/10 flex items-center justify-center text-[#ff708d] group-hover:scale-110 transition-transform text-xl">❤️</div>
+            <span class="text-[10px] tracking-widest uppercase text-neutral-400 mt-3 font-medium">TAP TO OPEN</span>
+        </div>
+
+        <!-- Unsealed Content Card -->
+        <div id="letter-content" class="hidden bg-[#16050a] border border-[#3d0d1b] p-6 rounded-3xl shadow-2xl w-full text-left relative">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-sm font-bold text-neutral-100">JUST FOR YOU ✨</h3>
+                    <p class="text-[10px] text-neutral-500">From my heart to yours</p>
+                </div>
+                <button onclick="closeLetter()" class="text-neutral-500 hover:text-white">✕</button>
+            </div>
+
+            <div class="space-y-3 text-xs md:text-sm text-neutral-300 font-serif leading-relaxed">
+                <p class="font-sans font-semibold text-[#ff708d]">Happy Birthday, Love 💖</p>
+                <p>You are the most beautiful part of my life, and I'm so lucky to have you. Your smile makes my days better, and your presence makes everything feel special. I hope your birthday is filled with happiness, love, and endless smiles.</p>
+                <p class="text-neutral-400 text-xs pt-2">Always stay happy — because your happiness means a lot to me.</p>
+            </div>
+
+            <div class="flex gap-3 mt-6 pt-4 border-t border-[#3d0d1b]">
+                <button onclick="triggerConfetti()" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#e63946] to-[#ff708d] text-white font-medium text-xs shadow-md">CELEBRATE</button>
+                <button onclick="resetApp()" class="px-5 py-2.5 rounded-full bg-[#220710] border border-[#3d0d1b] text-neutral-300 font-medium text-xs hover:bg-[#330a17]">RESTART</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Script -->
+    <script>
+        let currentPass = "";
+        const correctPass = "2026";
+
+        function pressNum(num) {
+            if (currentPass.length < 4) {
+                currentPass += num;
+                updateDots();
+                if (currentPass.length === 4) {
+                    if (currentPass === correctPass) {
+                        setTimeout(startLoading, 300);
+                    } else {
+                        animateError();
+                    }
+                }
+            }
+        }
+
+        function clearPass() {
+            currentPass = "";
+            updateDots();
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index < currentPass.length) {
+                    dot.classList.add('bg-[#ff708d]', 'scale-110', 'shadow-[0_0_10px_#ff708d]');
+                } else {
+                    dot.classList.remove('bg-[#ff708d]', 'scale-110', 'shadow-[0_0_10px_#ff708d]');
+                }
+            });
+        }
+
+        function animateError() {
+            const dotsContainer = document.getElementById('dots-container');
+            dotsContainer.classList.add('animate-bounce');
+            setTimeout(() => {
+                currentPass = "";
+                updateDots();
+                dotsContainer.classList.remove('animate-bounce');
+            }, 500);
+        }
+
+        function toggleModal(show) {
+            const modal = document.getElementById('modal-hint');
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function startLoading() {
+            document.getElementById('screen-lock').classList.add('hidden');
+            document.getElementById('screen-loading').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('screen-loading').classList.add('hidden');
+                document.getElementById('screen-start').classList.remove('hidden');
+            }, 2500);
+        }
+
+        function switchScreen(screenId) {
+            ['screen-start', 'screen-milestone', 'screen-memories', 'screen-letter'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function openLetter() {
+            document.getElementById('heart-trigger').style.display = 'none';
+            document.getElementById('letter-content').classList.remove('hidden');
+        }
+
+        function closeLetter() {
+            document.getElementById('letter-content').classList.add('hidden');
+            document.getElementById('heart-trigger').style.display = 'flex';
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function resetApp() {
+            currentPass = "";
+            updateDots();
+            closeLetter();
+            ['screen-milestone', 'screen-memories', 'screen-letter'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById('screen-lock').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
