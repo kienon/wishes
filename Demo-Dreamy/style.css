@@ -1,0 +1,179 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f7f0e6;
+    color: #4a3e3d;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.scene {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0; left: 0;
+    transition: opacity 0.5s ease;
+}
+
+.hidden { display: none !important; }
+
+/* SCENE 1: INTRO BLOOM */
+#scene-intro {
+    background: #f4ede2;
+}
+
+.intro-envelope {
+    text-align: center;
+    cursor: pointer;
+    animation: float 2s infinite ease-in-out;
+}
+
+.env-body { font-size: 80px; }
+.tap-hint { font-size: 14px; color: #8c7a6b; margin-top: 10px; }
+
+.bloom-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #fce8e6;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 10;
+}
+
+.bloom-center {
+    text-align: center; cursor: pointer;
+    animation: pulse 1.5s infinite;
+}
+
+.flower-cluster { font-size: 90px; }
+.reveal-text { font-family: 'Caveat', cursive; font-size: 24px; color: #b56576; }
+
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+/* SCENE 2: GIFT UNBOXING */
+#scene-gift {
+    background: radial-gradient(circle, #fde2e4 0%, #ffcad4 100%);
+}
+
+.gift-box-wrapper {
+    text-align: center; cursor: pointer;
+    animation: bounce 1.2s infinite;
+}
+
+.gift-icon-big { font-size: 100px; }
+.gift-caption { font-family: 'Dancing Script', cursive; font-size: 26px; color: #6b2d5c; margin-top: 15px; }
+
+/* SCENE 3: MAIN DASHBOARD */
+#scene-main {
+    background: #fcf0f2;
+    padding: 20px;
+    align-items: flex-start;
+}
+
+.main-layout {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* LEFT WIDGETS */
+.left-widgets {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.widget-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #f3c4fb;
+    border-radius: 16px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.widget-card button {
+    background: #b56576;
+    color: #fff; border: none;
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; cursor: pointer; margin-top: 8px;
+}
+
+.map-placeholder {
+    height: 80px; background: #e8dff5; border-radius: 10px;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 12px; color: #6d597a; margin-top: 8px;
+}
+
+/* RIGHT CONTENT */
+.right-content {
+    flex: 1.2;
+    min-width: 300px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    min-height: 380px;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.birthday-title { font-family: 'Dancing Script', cursive; font-size: 42px; color: #b56576; }
+.birthday-sub { font-family: 'Caveat', cursive; font-size: 28px; color: #6d597a; }
+.cake-illustration { font-size: 90px; margin-top: 15px; }
+
+/* ALBUM */
+.flip-album {
+    width: 220px; height: 280px; background: #fff0f3;
+    border: 2px solid #ffb5a7; border-radius: 12px;
+    padding: 20px; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.flip-album img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; }
+
+/* LETTER */
+.wax-envelope {
+    width: 180px; height: 120px; background: #f8edeb;
+    border: 1px solid #fcd5ce; border-radius: 10px;
+    margin: 0 auto; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; cursor: pointer;
+}
+.popup-letter {
+    background: #fff; padding: 20px; border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-size: 13px; line-height: 1.6;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px; border-radius: 30px;
+    display: flex; gap: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.bottom-nav button {
+    background: none; border: none; font-size: 22px; cursor: pointer; transition: 0.2s;
+}
+.bottom-nav button:hover { transform: scale(1.2); }
+
+/* SCENE 4: FINALE */
+#scene-finale {
+    background: #0d0221; color: #fff;
+}
+.dark-finale-bg { text-align: center; }
+.sparkle-title { font-family: 'Dancing Script', cursive; font-size: 48px; color: #f72585; }
+.floating-cubes { display: flex; gap: 20px; justify-content: center; margin: 30px 0; font-size: 40px; }
+.restart-btn {
+    background: #f72585; color: #fff; border: none;
+    padding: 12px 24px; border-radius: 25px; font-weight: bold; cursor: pointer;
+}
