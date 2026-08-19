@@ -1,0 +1,182 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+
+body {
+    background-color: #120014;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* FALLING FLOWERS */
+#flower-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.falling-flower {
+    position: absolute;
+    top: -10px;
+    font-size: 20px;
+    animation: fall linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes fall {
+    to { transform: translateY(105vh) rotate(360deg); }
+}
+
+.screen {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    text-align: center;
+}
+
+.hidden { display: none !important; }
+
+/* LOCK SCREEN & CARD */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.icon { font-size: 40px; margin-bottom: 10px; }
+.subtitle { font-size: 14px; color: #ccc; margin-bottom: 20px; }
+
+.code-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.code-dots span {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #ff79c6;
+}
+
+.code-dots span.filled { background-color: #ff79c6; }
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+.keypad button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.keypad button:active { background: #ff79c6; }
+.hint { margin-top: 20px; font-size: 12px; color: #aaa; }
+.error-msg { color: #ff5555; font-size: 12px; margin-top: 8px; height: 15px; }
+
+/* GIFT BOX SCREEN */
+.gift-container { cursor: pointer; animation: bounce 1.5s infinite; }
+.gift-box { font-size: 100px; margin-top: 20px; }
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* MAIN CONTENT SECTIONS */
+.container { display: flex; flex-direction: column; gap: 30px; }
+
+.section {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header h1 { color: #ff79c6; font-size: 24px; margin: 5px 0; }
+.tag { font-size: 12px; color: #ffb86c; text-transform: uppercase; }
+.quote { font-style: italic; font-size: 13px; color: #ddd; margin-top: 10px; }
+
+/* BOUQUET */
+.bouquet-grid { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+.bouquet-grid button {
+    font-size: 30px; background: none; border: none; cursor: pointer; transition: 0.2s;
+}
+.bouquet-grid button:hover { transform: scale(1.3); }
+.flower-popup {
+    margin-top: 15px; background: #ff79c6; color: #120014;
+    padding: 10px; border-radius: 10px; font-weight: bold; font-size: 13px;
+}
+
+/* LETTER */
+.letter-box { text-align: left; }
+.letter-box h3 { text-align: center; margin-bottom: 15px; }
+.letter-body { font-size: 13px; line-height: 1.6; color: #eaeaea; margin: 10px 0; }
+.signature { text-align: right; margin-top: 15px; font-size: 12px; color: #ff79c6; }
+
+/* PHOTO GRID */
+.photo-grid { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+.photo-card {
+    background: rgba(255,255,255,0.1); padding: 8px; border-radius: 10px; cursor: pointer;
+}
+.photo-card img { width: 120px; height: 120px; border-radius: 8px; object-fit: cover; }
+.photo-card p { font-size: 11px; margin-top: 5px; }
+
+/* TIMELINE */
+.timeline { text-align: left; margin-top: 15px; border-left: 2px solid #ff79c6; padding-left: 15px; }
+.timeline-item { margin-bottom: 15px; }
+.timeline-item .date { font-size: 10px; color: #ffb86c; }
+.timeline-item h4 { font-size: 14px; margin: 2px 0; }
+.timeline-item p { font-size: 12px; color: #ccc; }
+
+/* MUSIC PLAYER */
+.player-controls { margin: 15px 0; }
+#play-btn {
+    background: #ff79c6; color: #120014; border: none; padding: 8px 20px;
+    border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 8px;
+}
+.playlist { list-style: none; text-align: left; font-size: 12px; }
+.playlist li {
+    padding: 8px; background: rgba(255,255,255,0.05); margin-top: 5px;
+    border-radius: 5px; cursor: pointer;
+}
+.playlist li:hover { background: rgba(255,121,198,0.3); }
+
+/* JAR */
+.jar-icon { font-size: 60px; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+.jar-icon:active { transform: rotate(15deg) scale(1.1); }
+.jar-note {
+    background: #ffb86c; color: #120014; padding: 10px; border-radius: 10px;
+    font-size: 13px; font-weight: bold; margin-top: 10px;
+}
+
+/* MODAL */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center;
+}
+.modal-content { background: #222; padding: 15px; border-radius: 10px; max-width: 80%; }
+.modal-content img { width: 100%; border-radius: 8px; }
