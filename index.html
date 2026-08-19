@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, Kimmy 💖</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- SECTION 1: PASSCODE LOCK SCREEN -->
+    <div id="lock-screen" class="screen">
+        <div class="card">
+            <div class="icon">🌹</div>
+            <h2>For You, Kimmy</h2>
+            <p class="subtitle">Enter the secret code</p>
+            
+            <div class="code-dots" id="code-dots">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="keypad">
+                <button onclick="pressNum('1')">1</button>
+                <button onclick="pressNum('2')">2</button>
+                <button onclick="pressNum('3')">3</button>
+                <button onclick="pressNum('4')">4</button>
+                <button onclick="pressNum('5')">5</button>
+                <button onclick="pressNum('6')">6</button>
+                <button onclick="pressNum('7')">7</button>
+                <button onclick="pressNum('8')">8</button>
+                <button onclick="pressNum('9')">9</button>
+                <button onclick="clearCode()">✕</button>
+                <button onclick="pressNum('0')">0</button>
+                <button onclick="submitCode()">↵</button>
+            </div>
+
+            <p class="hint">Hint: 111111 💜</p>
+            <p id="error-msg" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- SECTION 2: GIFT BOX SCREEN -->
+    <div id="gift-screen" class="screen hidden">
+        <div class="gift-container" onclick="openGift()">
+            <p>Tap the gift box to open it 🎁</p>
+            <div class="gift-box">🎁</div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: MAIN CONTENT (Surprise Page Placeholder) -->
+    <div id="main-content" class="screen hidden">
+        <div class="content-wrapper">
+            <h1>✨ Happy Birthday Kimmy! ✨</h1>
+            <p>Selamat datang ke kejutan istimewa kau!</p>
+            <!-- Nanti kita tambah bahagian Bunga, Surat, Music Player, & Timeline kat sini -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
