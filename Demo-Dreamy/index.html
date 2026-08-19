@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whimsical Birthday Gift — For Dalia 💖</title>
+    
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <!-- CONFETTI LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <!-- SCENE 1: ENVELOPE INTRO & FLOWER BLOOM -->
+    <div id="scene-intro" class="scene">
+        <div class="intro-envelope" onclick="startBloom()">
+            <div class="env-body">✉️</div>
+            <p class="tap-hint">Tap to open</p>
+        </div>
+
+        <div id="flower-bloom-container" class="bloom-overlay hidden">
+            <div class="bloom-center" onclick="revealGiftScreen()">
+                <div class="flower-cluster">🌸🌺🌹🌻🌼🌷</div>
+                <p class="reveal-text">Tap to reveal ✨</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 2: GIFT UNBOXING -->
+    <div id="scene-gift" class="scene hidden">
+        <div class="pink-cloud-bg"></div>
+        <div class="gift-box-wrapper" onclick="openMainSurprise()">
+            <div class="gift-icon-big">🎁</div>
+            <p class="gift-caption">Tap the gift box for a surprise ✨</p>
+        </div>
+    </div>
+
+    <!-- SCENE 3: MAIN WHIMSICAL DASHBOARD -->
+    <div id="scene-main" class="scene hidden">
+        <div class="pastel-background"></div>
+
+        <!-- MAIN CONTAINER -->
+        <div class="main-layout">
+            
+            <!-- LEFT COLUMN: WIDGET STACK -->
+            <div class="left-widgets">
+                <!-- WIDGET 1: MUSIC PLAYER -->
+                <div class="widget-card music-widget">
+                    <div class="song-info">
+                        <strong>Die With A Smile</strong>
+                        <p>Lady Gaga, Bruno Mars</p>
+                    </div>
+                    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+                    <button onclick="toggleMusic()" id="music-btn">▶ Play</button>
+                </div>
+
+                <!-- WIDGET 2: MEMORY MAP -->
+                <div class="widget-card map-widget">
+                    <h4>Memory Map 🗺️</h4>
+                    <div class="map-placeholder">
+                        <span>📍 First Date Location</span>
+                    </div>
+                </div>
+
+                <!-- WIDGET 3: VOICE NOTE -->
+                <div class="widget-card vn-widget">
+                    <p>🎙️ A soft little message...</p>
+                    <button onclick="toggleVN()" id="vn-btn">▶ Listen (0:14)</button>
+                    <audio id="vn-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"></audio>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: MAIN CENTERPIECE & ALBUM -->
+            <div class="right-content">
+                <div id="tab-cake" class="tab-content">
+                    <h1 class="birthday-title">Happy Birthday!</h1>
+                    <h2 class="birthday-sub">My Love 💖</h2>
+                    <div class="cake-illustration">🎂</div>
+                </div>
+
+                <!-- PHOTO ALBUM TAB -->
+                <div id="tab-album" class="tab-content hidden">
+                    <div class="flip-album" onclick="flipAlbum()">
+                        <div class="album-cover" id="album-cover">
+                            <h3>Happy Birthday</h3>
+                            <p>PHOTO ALBUM 📖</p>
+                            <span class="click-hint">(Tap to open)</span>
+                        </div>
+                        <div class="album-page hidden" id="album-page">
+                            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="Memory">
+                            <p>Our Special Moment ✨</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LETTER TAB -->
+                <div id="tab-letter" class="tab-content hidden">
+                    <div class="wax-envelope" onclick="openLetter()">
+                        <div class="wax-seal">💖</div>
+                        <p>Tap to read letter</p>
+                    </div>
+                    <div class="popup-letter hidden" id="popup-letter">
+                        <h3>Dear Dalia,</h3>
+                        <p>Today is such a special day — the day someone wonderful like you came into this world. Meeting you is the luckiest thing in my life. Loving you more every day! 🎂</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM NAVIGATION BAR -->
+        <nav class="bottom-nav">
+            <button onclick="switchTab('cake')">🎂</button>
+            <button onclick="switchTab('album')">📖</button>
+            <button onclick="switchTab('letter')">✉️</button>
+            <button onclick="triggerFinale()">✨</button>
+        </nav>
+    </div>
+
+    <!-- SCENE 4: FINALE 3D PARTICLE CELEBRATION -->
+    <div id="scene-finale" class="scene hidden">
+        <div class="dark-finale-bg">
+            <h1 class="sparkle-title">For My Love 💖</h1>
+            <div class="floating-cubes">
+                <div class="cube">📷</div>
+                <div class="cube">🎁</div>
+                <div class="cube">💐</div>
+            </div>
+            <button onclick="restartDemo()" class="restart-btn">🔄 Replay Surprise</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
