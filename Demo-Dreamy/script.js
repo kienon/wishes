@@ -1,99 +1,95 @@
-// SCENE & PHASE TRANSITION LOGIC
+// SCENE & BLOOM EXPLOSION LOGIC
 function triggerFlowerBloom() {
-    document.getElementById("bloom-overlay").classList.remove("hidden");
+    document.getElementById("flower-bloom-overlay").classList.remove("hidden");
 }
 
-function goToGiftPhase() {
-    document.getElementById("phase-intro").classList.add("hidden");
-    document.getElementById("phase-gift").classList.remove("hidden");
+function goToGiftScene() {
+    document.getElementById("scene-intro").classList.add("hidden");
+    document.getElementById("scene-gift").classList.remove("hidden");
 }
 
-function goToDashboardPhase() {
-    document.getElementById("phase-gift").classList.add("hidden");
-    document.getElementById("phase-dashboard").classList.remove("hidden");
+function goToDashboardScene() {
+    document.getElementById("scene-gift").classList.add("hidden");
+    document.getElementById("scene-dashboard").classList.remove("hidden");
     confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
 }
 
-// MUSIC PLAYER CONTROLS
+// MUSIC CONTROLS
 const bgMusic = document.getElementById("bg-music");
 function toggleMusic() {
-    const btn = document.getElementById("music-play-btn");
+    const btn = document.getElementById("music-btn");
     if (bgMusic.paused) {
         bgMusic.play();
         btn.innerText = "⏸ Pause";
     } else {
         bgMusic.pause();
-        btn.innerText = "▶ Play";
+        btn.innerText = "▶ Play Preview";
     }
 }
 
 // VOICE NOTE CONTROLS
 const vnAudio = document.getElementById("vn-audio");
 function toggleVN() {
-    const btn = document.getElementById("vn-play-btn");
+    const btn = document.getElementById("vn-btn");
     if (vnAudio.paused) {
         vnAudio.play();
-        btn.innerText = "⏸ Pause Voice Note";
+        btn.innerText = "⏸ Pause";
     } else {
         vnAudio.pause();
-        btn.innerText = "▶ Listen Voice Note";
+        btn.innerText = "▶ Play (0:14)";
     }
 }
 
-function playYTDemo() {
-    alert("Playing video: John Legend - All of Me 🎵");
-}
-
-// CAKE CANDLE BLOW LOGIC
+// CAKE CANDLE BLOW
 function blowCandle() {
     const flame = document.getElementById("candle-flame");
-    const hint = document.getElementById("candle-hint");
+    const hint = document.getElementById("cake-hint");
     flame.style.display = "none";
     hint.innerText = "Wish made! Happy Birthday! 🎉";
-    confetti({ particleCount: 80, spread: 60, origin: { y: 0.5 } });
+    confetti({ particleCount: 90, spread: 70, origin: { y: 0.5 } });
 }
 
-// TAB SWITCHING LOGIC
+// TAB NAVIGATION
 function switchTab(tabName) {
     document.getElementById("tab-cake").classList.add("hidden");
     document.getElementById("tab-album").classList.add("hidden");
     document.getElementById("tab-letter").classList.add("hidden");
 
-    document.getElementById("nav-cake").classList.remove("active");
-    document.getElementById("nav-album").classList.remove("active");
-    document.getElementById("nav-letter").classList.remove("active");
+    document.getElementById("btn-cake").classList.remove("active");
+    document.getElementById("btn-album").classList.remove("active");
+    document.getElementById("btn-letter").classList.remove("active");
 
     if (tabName === 'cake') {
         document.getElementById("tab-cake").classList.remove("hidden");
-        document.getElementById("nav-cake").classList.add("active");
+        document.getElementById("btn-cake").classList.add("active");
     } else if (tabName === 'album') {
         document.getElementById("tab-album").classList.remove("hidden");
-        document.getElementById("nav-album").classList.add("active");
+        document.getElementById("btn-album").classList.add("active");
     } else if (tabName === 'letter') {
         document.getElementById("tab-letter").classList.remove("hidden");
-        document.getElementById("nav-letter").classList.add("active");
+        document.getElementById("btn-letter").classList.add("active");
     }
 }
 
-// ALBUM PAGE FLIP LOGIC
-let currentAlbumPage = 0;
-function nextAlbumPage() {
+// ALBUM FLIPBOOK PAGE TURN
+let currentPage = 0;
+function turnAlbumPage() {
     const cover = document.getElementById("album-cover");
-    const page1 = document.getElementById("album-page-1");
-    const page2 = document.getElementById("album-page-2");
+    const p1 = document.getElementById("album-p1");
+    const p2 = document.getElementById("album-p2");
 
-    if (currentAlbumPage === 0) {
+    if (currentPage === 0) {
         cover.classList.add("hidden");
-        page1.classList.remove("hidden");
-        currentAlbumPage = 1;
-    } else if (currentAlbumPage === 1) {
-        page1.classList.add("hidden");
-        page2.classList.remove("hidden");
-        currentAlbumPage = 2;
+        p1.classList.remove("hidden");
+        currentPage = 1;
+    } else if (currentPage === 1) {
+        p1.classList.add("hidden");
+        p2.classList.remove("hidden");
+        currentPage = 2;
     } else {
-        page2.classList.add("hidden");
+        p2.classList.add("hidden");
         cover.classList.remove("hidden");
-        currentAlbumPage = 0;
+        currentPage = 0;
     }
 }
 
@@ -103,15 +99,15 @@ function openWaxLetter() {
     letter.classList.toggle("hidden");
 }
 
-// FINALE PHASE & REPLAY
-function triggerFinalePhase() {
-    document.getElementById("phase-dashboard").classList.add("hidden");
-    document.getElementById("phase-finale").classList.remove("hidden");
+// FINALE SCENE & REPLAY
+function triggerFinaleScene() {
+    document.getElementById("scene-dashboard").classList.add("hidden");
+    document.getElementById("scene-finale").classList.remove("hidden");
     confetti({ particleCount: 200, spread: 100, origin: { y: 0.5 } });
 }
 
-function restartDemo() {
-    document.getElementById("phase-finale").classList.add("hidden");
-    document.getElementById("phase-intro").classList.remove("hidden");
-    document.getElementById("bloom-overlay").classList.add("hidden");
+function replaySurprise() {
+    document.getElementById("scene-finale").classList.add("hidden");
+    document.getElementById("scene-intro").classList.remove("hidden");
+    document.getElementById("flower-bloom-overlay").classList.add("hidden");
 }
