@@ -26,7 +26,7 @@
                 <div class="gold-wax-seal">🌹</div>
             </div>
         </div>
-        <p class="tap-hint">tap the envelope for the surprise...</p>
+        <p class="tap-hint">tap the envelope for the surpice...</p>
     </div>
 
     <!-- SCREEN 2: GIFTS MENU ("Gifts for you") -->
@@ -70,19 +70,35 @@
         </div>
     </div>
 
-    <!-- SCREEN 4: MEMORIES -->
+    <!-- SCREEN 4: MEMORIES (EXACT WENDING PATH & BOTTOM BANNER LAYOUT) -->
     <div id="screen-memories" class="screen hidden scrollable">
         <h1 class="romantic-title">Memories Made With You</h1>
         <div class="memories-content">
-            <p class="memory-desc">
-                Every photo here tells a story—a moment filled with laughter, love, and memories that I'll always cherish. Looking back at these reminds me of how many beautiful moments we've shared together and how much joy you've brought into my life.
-            </p>
-            <div class="photo-cluster">
-                <div class="cluster-polaroid"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=200"></div>
-                <div class="cluster-polaroid"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=200"></div>
-                <div class="cluster-polaroid"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=200"></div>
+            <div class="memories-text-box">
+                <p class="memory-desc">
+                    Here tells a story—a moment filled with laughter, love, and memories that I'll always cherish. Looking back at these reminds me of how many beautiful moments we've shared together and how much joy you've brought into my life.
+                </p>
+                <p class="memory-desc">
+                    From the simplest days to the most unforgettable adventures, every memory is special because it was spent with you. Thank you for being part of my journey and for creating countless moments that I will treasure forever. These photos are little pieces of our story, and I can't wait to make even more memories with you in the years to come. 🤍
+                </p>
             </div>
-            <button class="back-btn" onclick="showScreen('screen-menu')">Back</button>
+
+            <!-- WENDING PATH & SCATTERED POLAROIDS SECTION (EXACT VIDEO MATCH) -->
+            <div class="winding-path-container">
+                <svg class="dotted-path-svg" viewBox="0 0 600 300" preserveAspectRatio="none">
+                    <path d="M 50,50 Q 200,250 350,100 T 550,200" fill="none" stroke="#fceade" stroke-width="3" stroke-dasharray="8,8" opacity="0.6"/>
+                </svg>
+                <div class="path-polaroid p1"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=150"></div>
+                <div class="path-polaroid p2"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=150"></div>
+                <div class="path-polaroid p3"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=150"></div>
+                <div class="path-polaroid p4"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=150"></div>
+                <div class="path-polaroid p5"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=150"></div>
+            </div>
+
+            <!-- SECTION BANNER AT THE BOTTOM -->
+            <div class="section-bottom-banner">
+                <button class="back-btn" onclick="showScreen('screen-menu')">Back</button>
+            </div>
         </div>
     </div>
 
