@@ -1,23 +1,23 @@
-// SCENE TRANSITIONS
-function startBloom() {
-    document.getElementById("flower-bloom-container").classList.remove("hidden");
+// SCENE & PHASE TRANSITION LOGIC
+function triggerFlowerBloom() {
+    document.getElementById("bloom-overlay").classList.remove("hidden");
 }
 
-function revealGiftScreen() {
-    document.getElementById("scene-intro").classList.add("hidden");
-    document.getElementById("scene-gift").classList.remove("hidden");
+function goToGiftPhase() {
+    document.getElementById("phase-intro").classList.add("hidden");
+    document.getElementById("phase-gift").classList.remove("hidden");
 }
 
-function openMainSurprise() {
-    document.getElementById("scene-gift").classList.add("hidden");
-    document.getElementById("scene-main").classList.remove("hidden");
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+function goToDashboardPhase() {
+    document.getElementById("phase-gift").classList.add("hidden");
+    document.getElementById("phase-dashboard").classList.remove("hidden");
+    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
 }
 
-// MUSIC & VOICE NOTE CONTROLS
+// MUSIC PLAYER CONTROLS
 const bgMusic = document.getElementById("bg-music");
 function toggleMusic() {
-    const btn = document.getElementById("music-btn");
+    const btn = document.getElementById("music-play-btn");
     if (bgMusic.paused) {
         bgMusic.play();
         btn.innerText = "⏸ Pause";
@@ -27,58 +27,91 @@ function toggleMusic() {
     }
 }
 
+// VOICE NOTE CONTROLS
 const vnAudio = document.getElementById("vn-audio");
 function toggleVN() {
-    const btn = document.getElementById("vn-btn");
+    const btn = document.getElementById("vn-play-btn");
     if (vnAudio.paused) {
         vnAudio.play();
-        btn.innerText = "⏸ Pause";
+        btn.innerText = "⏸ Pause Voice Note";
     } else {
         vnAudio.pause();
-        btn.innerText = "▶ Listen (0:14)";
+        btn.innerText = "▶ Listen Voice Note";
     }
 }
 
-// TAB NAVIGATION
+function playYTDemo() {
+    alert("Playing video: John Legend - All of Me 🎵");
+}
+
+// CAKE CANDLE BLOW LOGIC
+function blowCandle() {
+    const flame = document.getElementById("candle-flame");
+    const hint = document.getElementById("candle-hint");
+    flame.style.display = "none";
+    hint.innerText = "Wish made! Happy Birthday! 🎉";
+    confetti({ particleCount: 80, spread: 60, origin: { y: 0.5 } });
+}
+
+// TAB SWITCHING LOGIC
 function switchTab(tabName) {
     document.getElementById("tab-cake").classList.add("hidden");
     document.getElementById("tab-album").classList.add("hidden");
     document.getElementById("tab-letter").classList.add("hidden");
 
-    if (tabName === 'cake') document.getElementById("tab-cake").classList.remove("hidden");
-    if (tabName === 'album') document.getElementById("tab-album").classList.remove("hidden");
-    if (tabName === 'letter') document.getElementById("tab-letter").classList.remove("hidden");
-}
+    document.getElementById("nav-cake").classList.remove("active");
+    document.getElementById("nav-album").classList.remove("active");
+    document.getElementById("nav-letter").classList.remove("active");
 
-// ALBUM FLIP LOGIC
-function flipAlbum() {
-    const cover = document.getElementById("album-cover");
-    const page = document.getElementById("album-page");
-    
-    if (page.classList.contains("hidden")) {
-        cover.classList.add("hidden");
-        page.classList.remove("hidden");
-    } else {
-        page.classList.add("hidden");
-        cover.classList.remove("hidden");
+    if (tabName === 'cake') {
+        document.getElementById("tab-cake").classList.remove("hidden");
+        document.getElementById("nav-cake").classList.add("active");
+    } else if (tabName === 'album') {
+        document.getElementById("tab-album").classList.remove("hidden");
+        document.getElementById("nav-album").classList.add("active");
+    } else if (tabName === 'letter') {
+        document.getElementById("tab-letter").classList.remove("hidden");
+        document.getElementById("nav-letter").classList.add("active");
     }
 }
 
-// LETTER POPUP LOGIC
-function openLetter() {
-    const popup = document.getElementById("popup-letter");
-    popup.classList.toggle("hidden");
+// ALBUM PAGE FLIP LOGIC
+let currentAlbumPage = 0;
+function nextAlbumPage() {
+    const cover = document.getElementById("album-cover");
+    const page1 = document.getElementById("album-page-1");
+    const page2 = document.getElementById("album-page-2");
+
+    if (currentAlbumPage === 0) {
+        cover.classList.add("hidden");
+        page1.classList.remove("hidden");
+        currentAlbumPage = 1;
+    } else if (currentAlbumPage === 1) {
+        page1.classList.add("hidden");
+        page2.classList.remove("hidden");
+        currentAlbumPage = 2;
+    } else {
+        page2.classList.add("hidden");
+        cover.classList.remove("hidden");
+        currentAlbumPage = 0;
+    }
 }
 
-// FINALE CELEBRATION
-function triggerFinale() {
-    document.getElementById("scene-main").classList.add("hidden");
-    document.getElementById("scene-finale").classList.remove("hidden");
+// WAX LETTER TOGGLE
+function openWaxLetter() {
+    const letter = document.getElementById("sliding-letter");
+    letter.classList.toggle("hidden");
+}
+
+// FINALE PHASE & REPLAY
+function triggerFinalePhase() {
+    document.getElementById("phase-dashboard").classList.add("hidden");
+    document.getElementById("phase-finale").classList.remove("hidden");
     confetti({ particleCount: 200, spread: 100, origin: { y: 0.5 } });
 }
 
 function restartDemo() {
-    document.getElementById("scene-finale").classList.add("hidden");
-    document.getElementById("scene-intro").classList.remove("hidden");
-    document.getElementById("flower-bloom-container").classList.add("hidden");
+    document.getElementById("phase-finale").classList.add("hidden");
+    document.getElementById("phase-intro").classList.remove("hidden");
+    document.getElementById("bloom-overlay").classList.add("hidden");
 }
