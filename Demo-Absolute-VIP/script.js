@@ -87,13 +87,22 @@ function checkAnswer(isCorrect) {
     }
 }
 
-// ENVELOPE LOGIC
+// ENVELOPE LOGIC (UPDATED: TOGGLE SHOW/HIDE LETTER)
 function toggleEnvelope() {
     const env = document.getElementById("envelope");
+    const letter = document.getElementById("full-letter");
+
     env.classList.toggle("open");
-    setTimeout(() => {
-        document.getElementById("full-letter").classList.remove("hidden");
-    }, 600);
+
+    if (env.classList.contains("open")) {
+        // Jika sampul dibuka, tunjuk surat selepas animasi sampul bergerak
+        setTimeout(() => {
+            letter.classList.remove("hidden");
+        }, 400);
+    } else {
+        // Jika sampul ditutup, terus sembunyikan surat
+        letter.classList.add("hidden");
+    }
 }
 
 // VOICE NOTE
