@@ -129,7 +129,12 @@ body {
 }
 .envelope.open .letter { transform: translateY(-60px); z-index: 4; }
 
-/* REAL BOUQUET SHAPE STYLING (FIXED POSITIONS) */
+/* FULL LETTER TRANSITION */
+.letter-box {
+    transition: all 0.4s ease-in-out;
+}
+
+/* REAL BOUQUET SHAPE STYLING */
 .real-bouquet-container {
     position: relative;
     width: 260px;
