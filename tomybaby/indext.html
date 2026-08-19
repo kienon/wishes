@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Baby Aina ❤️</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #008080, #042f2e, #021a19);
+      font-family: Arial, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      padding: 20px 10px;
+    }
+
+    /* --- PASSCODE SCREEN --- */
+    #passcodeScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #021a19;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      padding: 20px;
+    }
+
+    .passcode-title {
+      color: #2dd4bf;
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .passcode-sub {
+      color: #99f6e4;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border: 2px solid #2dd4bf;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .dot.filled {
+      background: #ff4d6d;
+      border-color: #ff4d6d;
+      box-shadow: 0 0 10px #ff4d6d;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .key {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: rgba(20, 184, 166, 0.15);
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      color: #fff;
+      font-size: 1.4rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.1s ease;
+    }
+
+    .key:active {
+      background: #2dd4bf;
+      color: #042f2e;
+      transform: scale(0.95);
+    }
+
+    .hint-text {
+      margin-top: 25px;
+      color: #80cbc4;
+      font-size: 0.8rem;
+    }
+
+    /* --- KAD UTAMA --- */
+    .card {
+      display: none;
+      background: rgba(20, 184, 166, 0.15);
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      border-radius: 20px;
+      padding: 25px 20px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+    }
+
+    h1 {
+      color: #2dd4bf;
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      color: #99f6e4;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .polaroid-frame {
+      background: #ffffff;
+      padding: 10px 10px 32px 10px;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+      transform: rotate(-1.5deg);
+      position: relative;
+      margin: 0 auto;
+      max-width: 320px;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .polaroid-caption {
+      position: absolute;
+      bottom: 6px;
+      left: 0;
+      width: 100%;
+      color: #333;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .love-message {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 20px 0 15px 0;
+      color: #e6fffa;
+      text-align: left;
+    }
+
+    .love-message p {
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      color: #ff4d6d;
+      font-weight: bold;
+    }
+
+    /* --- DIGITAL BOUQUET SECTION --- */
+    .bouquet-section {
+      background: rgba(20, 184, 166, 0.12);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 16px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+
+    .bouquet-title {
+      font-size: 0.9rem;
+      color: #99f6e4;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .flowers-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 2.2rem;
+      margin: 10px 0;
+    }
+
+    .flower-item {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .flower-item:active {
+      transform: scale(1.3);
+    }
+
+    .flower-note {
+      background: rgba(2, 26, 25, 0.8);
+      border: 1px dashed #2dd4bf;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.85rem;
+      color: #ff4d6d;
+      min-height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- TIMER BOX --- */
+    .timer-container {
+      background: rgba(45, 212, 191, 0.15);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 16px;
+      padding: 12px;
+      margin-top: 15px;
+    }
+
+    .timer-title {
+      font-size: 0.75rem;
+      color: #99f6e4;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .timer {
+      font-weight: bold;
+      font-size: 1.05rem;
+      color: #5eead4;
+    }
+
+    .bday-mode {
+      color: #ff4d6d !important;
+      font-size: 1.05rem !important;
+      line-height: 1.5;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.03); }
+    }
+
+    /* PARTIKEL HATI */
+    .heart-particle {
+      position: fixed;
+      top: -20px;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-5vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PASSCODE SCREEN OVERLAY -->
+  <div id="passcodeScreen">
+    <div class="passcode-title">FOR MY BABY AINA</div>
+    <div class="passcode-sub">ENTER SECRET PASSCODE</div>
+
+    <div class="dots-container">
+      <div class="dot" id="dot0"></div>
+      <div class="dot" id="dot1"></div>
+      <div class="dot" id="dot2"></div>
+      <div class="dot" id="dot3"></div>
+      <div class="dot" id="dot4"></div>
+      <div class="dot" id="dot5"></div>
+    </div>
+
+    <div class="keypad">
+      <div class="key" onclick="pressKey('1')">1</div>
+      <div class="key" onclick="pressKey('2')">2</div>
+      <div class="key" onclick="pressKey('3')">3</div>
+      <div class="key" onclick="pressKey('4')">4</div>
+      <div class="key" onclick="pressKey('5')">5</div>
+      <div class="key" onclick="pressKey('6')">6</div>
+      <div class="key" onclick="pressKey('7')">7</div>
+      <div class="key" onclick="pressKey('8')">8</div>
+      <div class="key" onclick="pressKey('9')">9</div>
+      <div class="key" onclick="pressKey('C')">✕</div>
+      <div class="key" onclick="pressKey('0')">0</div>
+      <div class="key" onclick="pressKey('OK')">➔</div>
+    </div>
+
+    <div class="hint-text">Passcode Hint: Tarikh Lahir Baby (DDMMYY) 💡</div>
+  </div>
+
+  <!-- KAD UTAMA (SELEPAS PASSCODE BETUL) -->
+  <div class="card" id="mainCard">
+    <h1>Khas Untuk Tunang Saya ❤️</h1>
+    <div class="subtitle">My Baby Aina</div>
+
+    <div class="polaroid-frame">
+      <div class="slideshow-container">
+        <img class="slide active" src="gambar1.jpg" alt="Dating 1">
+        <img class="slide" src="gambar2.jpg" alt="Dating 2">
+        <img class="slide" src="gambar3.jpg" alt="Dating 3">
+        <img class="slide" src="gambar4.jpg" alt="Dating 4">
+      </div>
+      <div class="polaroid-caption">Kenangan Kita Berdua 📸</div>
+    </div>
+
+    <!-- Mesej Utama -->
+    <div class="love-message">
+      <p>baby, b nda pandai sangat susun ayat manis. Tapi setiap kali tengok gambar-gambar kita kann yang p dating, b rasa bersyukur betul dapat kenal dan ada tunang macam <span class="highlight">Baby</span>.</p>
+      <p>Thanks ya selalu buat hari-hari b semakin bermakna. I love you so much, baby! 💖</p>
+    </div>
+
+    <!-- DIGITAL BOUQUET INTERAKTIF -->
+    <div class="bouquet-section">
+      <div class="bouquet-title">A Digital Bouquet For You 💐</div>
+      <div class="flowers-container">
+        <span class="flower-item" onclick="showNote('Senyuman baby penawar penat b selalu! 🌸')">🌸</span>
+        <span class="flower-item" onclick="showNote('Terima kasih sebab sentiasa faham b. 🌹')">🌹</span>
+        <span class="flower-item" onclick="showNote('Makin hari b makin sayang baby! 🌻')">🌻</span>
+        <span class="flower-item" onclick="showNote('You are my sun and my star! ✨🌷')">🌷</span>
+      </div>
+      <div class="flower-note" id="flowerNote">Tekan mana-mana bunga di atas... 💌</div>
+    </div>
+
+    <!-- Countdown Timer & Ucapan Hari Jadi Automatik -->
+    <div class="timer-container">
+      <div id="timerTitle" class="timer-title">Tunggu Tarikh Lahir Baby... 🎂</div>
+      <div id="countdown" class="timer">Membaca masa...</div>
+    </div>
+  </div>
+
+  <script>
+    // --- PASSCODE LOGIC ---
+    const SECRET_CODE = "260900"; // Tarikh Lahir: 26 Sept 2000
+    let enteredCode = "";
+
+    function pressKey(val) {
+      if (val === 'C') {
+        enteredCode = "";
+      } else if (val === 'OK') {
+        checkCode();
+        return;
+      } else {
+        if (enteredCode.length < 6) {
+          enteredCode += val;
+        }
+      }
+      updateDots();
+
+      if (enteredCode.length === 6) {
+        setTimeout(checkCode, 200);
+      }
+    }
+
+    function updateDots() {
+      for (let i = 0; i < 6; i++) {
+        const dot = document.getElementById(`dot${i}`);
+        if (i < enteredCode.length) {
+          dot.classList.add('filled');
+        } else {
+          dot.classList.remove('filled');
+        }
+      }
+    }
+
+    function checkCode() {
+      if (enteredCode === SECRET_CODE) {
+        document.getElementById('passcodeScreen').style.display = 'none';
+        document.getElementById('mainCard').style.display = 'block';
+      } else {
+        alert("Passcode salah baby, cuba lagi! 💖 (Hint: 260900)");
+        enteredCode = "";
+        updateDots();
+      }
+    }
+
+    // --- BOUQUET NOTE LOGIC ---
+    function showNote(text) {
+      document.getElementById('flowerNote').innerHTML = text;
+    }
+
+    // --- SLIDESHOW LOGIC ---
+    var slides = document.querySelectorAll('.slide');
+    var currentSlide = 0;
+    if (slides.length > 0) {
+      setInterval(function() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 3500);
+    }
+
+    // --- PARTIKEL HATI LOGIC ---
+    function createHeart() {
+      var heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      var heartsList = ['💖', '❤️', '✨', '💕'];
+      heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      heart.style.fontSize = (Math.random() * 18 + 12) + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(function() { heart.remove(); }, 6000);
+    }
+    setInterval(createHeart, 300);
+
+    // --- COUNTDOWN LOGIC ---
+    function updateCountdown() {
+      var now = new Date();
+      var currentYear = now.getFullYear();
+      var birthday = new Date(currentYear, 8, 26, 0, 0, 0);
+
+      var diff = birthday - now;
+
+      var countElem = document.getElementById("countdown");
+      var titleElem = document.getElementById("timerTitle");
+
+      if (now.getMonth() === 8 && now.getDate() === 26) {
+        titleElem.innerHTML = "HARI NI HARI ISTIMEWA BABY! 🥳✨";
+        countElem.innerHTML = "Selamat Ulang Tahun Lahir Tunang B! Terima kasih sebab hadir ke hidup b. Semoga panjang umur, murah rezeki, makin cantik... muahhh🥰😘💖🌸";
+        countElem.classList.add("bday-mode");
+      } 
+      else {
+        if (diff < 0) {
+          birthday = new Date(currentYear + 1, 8, 26, 0, 0, 0);
+          diff = birthday - now;
+        }
+
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if (countElem) {
+          countElem.innerHTML = days + " Hari " + hours + " Jam " + minutes + " Minit " + seconds + " Saat";
+        }
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
