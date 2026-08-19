@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absolute VIP Experience - For Dalia 👑</title>
+    <title>For Dalia — Absolute VIP Edition 👑</title>
+    
+    <!-- GOOGLE FONTS FOR LUXURY TYPOGRAPHY -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
+    <!-- Canvas Confetti & Fireworks Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-    <div id="flower-container"></div>
+    <!-- AMBIENT GLOW PARTICLES -->
+    <div id="ambient-particles"></div>
 
+    <!-- 1. LOCK SCREEN (PASSCODE) -->
     <div id="lock-screen" class="screen">
-        <div class="card luxury-card">
-            <div class="vip-badge">🔥 ABSOLUTE VIP — RM199</div>
-            <div class="icon">👑</div>
-            <h2>For You, Dalia</h2>
-            <p class="subtitle">Enter Secret Passcode</p>
+        <div class="glass-card lock-card">
+            <div class="vip-pill">ABSOLUTE VIP EXPERIENCE</div>
+            <h1 class="brand-title">For You, Dalia</h1>
+            <p class="subtitle">ENTER SECRET PASSCODE</p>
             
             <div class="code-dots" id="code-dots">
                 <span></span><span></span><span></span><span></span><span></span><span></span>
@@ -32,47 +40,54 @@
                 <button onclick="pressNum('7')">7</button>
                 <button onclick="pressNum('8')">8</button>
                 <button onclick="pressNum('9')">9</button>
-                <button onclick="clearCode()">✕</button>
+                <button onclick="clearCode()" class="action-btn">✕</button>
                 <button onclick="pressNum('0')">0</button>
-                <button onclick="submitCode()">↵</button>
+                <button onclick="submitCode()" class="action-btn">↵</button>
             </div>
 
-            <p class="hint">Hint: 111111 💎</p>
+            <p class="hint">Passcode Hint: 111111 ✦</p>
             <p id="error-msg" class="error-msg"></p>
         </div>
     </div>
 
+    <!-- 2. GIFT BOX UNBOXING SCREEN -->
     <div id="gift-screen" class="screen hidden">
         <div class="gift-container" onclick="openGift()">
-            <p class="gold-text">Tap the VIP Box to Reveal Surprise 🎁</p>
-            <div class="gift-box">🎁</div>
+            <div class="gift-glow"></div>
+            <div class="gift-icon">🎁</div>
+            <p class="gold-subtitle">Tap the gift box to unwrap your surprise</p>
         </div>
     </div>
 
+    <!-- 3. MAIN CONTENT -->
     <div id="main-content" class="screen hidden">
-        <div class="container">
+        <div class="main-wrapper">
 
-            <header class="header">
-                <div class="vip-pill">👑 ABSOLUTE VIP EXPERIENCE</div>
-                <h1>HAPPY BIRTHDAY DALIA</h1>
-                <p class="sub-header">Celebrating Your Most Special Day ✨</p>
+            <!-- HEADER SECTION -->
+            <header class="header-section">
+                <span class="golden-tag">A CELEBRATION OF LOVE</span>
+                <h1 class="main-title">Happy Birthday, Dalia</h1>
+                <p class="header-quote">"In a world full of trends, you remain a timeless classic."</p>
+                <div class="divider-gold">✦ ✦ ✦</div>
             </header>
 
-            <section class="section counter-card">
-                <h3>Days We've Been Together ⏳</h3>
-                <div class="timer-grid">
-                    <div class="time-box"><span id="days">00</span><p>Days</p></div>
-                    <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
-                    <div class="time-box"><span id="minutes">00</span><p>Mins</p></div>
-                    <div class="time-box"><span id="seconds">00</span><p>Secs</p></div>
+            <!-- LIVE TOGETHER COUNTER -->
+            <section class="glass-card section-card">
+                <h3 class="section-title">Days We've Shared Together</h3>
+                <div class="timer-flex">
+                    <div class="time-item"><span id="days">000</span><p>DAYS</p></div>
+                    <div class="time-item"><span id="hours">00</span><p>HOURS</p></div>
+                    <div class="time-item"><span id="minutes">00</span><p>MINS</p></div>
+                    <div class="time-item"><span id="seconds">00</span><p>SECS</p></div>
                 </div>
             </section>
 
-            <section class="section quiz-card" id="quiz-section">
-                <h3>Interactive Love Quiz 🎮</h3>
-                <p class="quiz-sub">Answer correctly to unlock the Secret Letter!</p>
-                <p id="quiz-question" class="question-text">Di manakah lokasi kenangan first date kita? 🤔</p>
-                <div class="quiz-options">
+            <!-- LOVE QUIZ -->
+            <section class="glass-card section-card" id="quiz-section">
+                <h3 class="section-title">Interactive Love Quiz</h3>
+                <p class="section-sub">Answer correctly to reveal the secret letter</p>
+                <p class="question-text">Di manakah lokasi kenangan first date kita?</p>
+                <div class="quiz-grid">
                     <button onclick="checkAnswer(false)">Cafe Santai</button>
                     <button onclick="checkAnswer(true)">Taman Bunga 🌹</button>
                     <button onclick="checkAnswer(false)">Panggung Wayang</button>
@@ -80,135 +95,145 @@
                 <p id="quiz-feedback" class="quiz-feedback"></p>
             </section>
 
-            <section class="section envelope-section hidden" id="envelope-section">
-                <h3>A Special Secret Letter ✉️</h3>
-                <p>Tap envelope to open / close</p>
-                <div class="envelope-wrapper" onclick="toggleEnvelope()">
-                    <div class="envelope" id="envelope">
-                        <div class="flap"></div>
-                        <div class="pocket"></div>
-                        <div class="letter">
-                            <p class="letter-preview">For My Dearest Dalia 💖</p>
-                        </div>
+            <!-- ENVELOPE & SECRET LETTER -->
+            <section class="glass-card section-card hidden" id="envelope-section">
+                <h3 class="section-title">A Secret Letter For You</h3>
+                <p class="section-sub">Tap the wax seal envelope to open / close</p>
+                
+                <div class="luxury-envelope" onclick="toggleEnvelope()">
+                    <div class="envelope-back"></div>
+                    <div class="envelope-paper">
+                        <p>For My Dearest Dalia 💖</p>
                     </div>
+                    <div class="envelope-front"></div>
+                    <div class="wax-seal">✦</div>
                 </div>
             </section>
 
-            <section class="section letter-box hidden" id="full-letter">
-                <h3>My Heartfelt Letter 💌</h3>
-                <p class="letter-body">
-                    My Dearest Dalia,<br><br>
-                    Every single second with you feels like a beautiful dream come true. You bring light, warmth, and magic into my life in ways words can never fully explain.<br><br>
-                    Thank you for being my strength, my happiness, and my favorite person. On this special day, I wish you endless laughter, peace, and all the happiness in the world.<br><br>
-                    Forever yours, ❤️
-                </p>
+            <!-- FULL LETTER CONTAINER -->
+            <section class="glass-card section-card letter-card hidden" id="full-letter">
+                <div class="letter-inner">
+                    <h3 class="letter-header">My Heartfelt Letter 💌</h3>
+                    <p class="letter-text">
+                        My Dearest Dalia,<br><br>
+                        Every single second with you feels like a beautiful dream come true. You bring light, warmth, and magic into my life in ways words can never fully explain.<br><br>
+                        Thank you for being my strength, my happiness, and my favorite person. On this special day, I wish you endless laughter, peace, and all the happiness in the world.<br><br>
+                        <em>Forever yours, ❤️</em>
+                    </p>
+                </div>
             </section>
 
-            <section class="section vn-card">
-                <h3>Voice Note Message 🎤</h3>
-                <p>Listen to a special voice message ❤️</p>
-                <div class="vn-player">
-                    <button id="vn-btn" onclick="toggleVN()">▶ Listen Voice Note</button>
+            <!-- VOICE NOTE PLAYER -->
+            <section class="glass-card section-card">
+                <h3 class="section-title">Voice Note Message 🎤</h3>
+                <p class="section-sub">Listen to a personal voice message recorded for you</p>
+                <div class="audio-control-box">
+                    <button id="vn-btn" onclick="toggleVN()" class="gold-pill-btn">▶ Play Voice Message</button>
                     <audio id="vn-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"></audio>
                 </div>
             </section>
 
-            <section class="section bouquet-section">
-                <h3>A Special Bouquet For You 💐</h3>
-                <p class="instruction">Tap any flower in the bouquet to read its message!</p>
+            <!-- DIGITAL BOUQUET -->
+            <section class="glass-card section-card">
+                <h3 class="section-title">A Digital Bouquet For You 💐</h3>
+                <p class="section-sub">Touch each flower to reveal its message</p>
                 
-                <div class="real-bouquet-container">
-                    <div class="paper-wrap"></div>
-                    <div class="ribbon">🎀</div>
-
-                    <div class="flowers-group">
-                        <button class="flower-btn f1" onclick="showFlowerMsg('🌸 Kamu adalah orang paling comel & istimewa dlm hidup aku!')">🌹</button>
-                        <button class="flower-btn f2" onclick="showFlowerMsg('🌷 Senyuman kamu penawar duka & penat aku.')">🌷</button>
-                        <button class="flower-btn f3" onclick="showFlowerMsg('🌻 Terima kasih sebab sentiasa ada & faham aku.')">🌻</button>
-                        <button class="flower-btn f4" onclick="showFlowerMsg('🌺 I love you more than words can say!')">🌺</button>
-                        <button class="flower-btn f5" onclick="showFlowerMsg('🌸 Semoga tahun ni bawa sejuta kebahagiaan untuk kamu!')">🌸</button>
+                <div class="bouquet-display">
+                    <div class="bouquet-vase"></div>
+                    <div class="bouquet-flowers">
+                        <button class="bloom b1" onclick="showFlowerMsg('🌸 Kamu adalah orang paling comel & istimewa dlm hidup aku!')">🌹</button>
+                        <button class="bloom b2" onclick="showFlowerMsg('🌷 Senyuman kamu penawar duka & penat aku.')">🌷</button>
+                        <button class="bloom b3" onclick="showFlowerMsg('🌻 Terima kasih sebab sentiasa ada & faham aku.')">🌻</button>
+                        <button class="bloom b4" onclick="showFlowerMsg('🌺 I love you more than words can say!')">🌺</button>
+                        <button class="bloom b5" onclick="showFlowerMsg('🌸 Semoga tahun ni bawa sejuta kebahagiaan untuk kamu!')">🌸</button>
                     </div>
                 </div>
 
                 <div id="flower-popup" class="flower-popup hidden"></div>
             </section>
 
-            <section class="section journey-section">
-                <h3>Our Journey Story 📖</h3>
-                <p class="instruction">Swipe horizontally to relive our memories 👉</p>
+            <!-- STORY CAROUSEL -->
+            <section class="glass-card section-card">
+                <h3 class="section-title">Our Journey Story 📖</h3>
+                <p class="section-sub">Swipe horizontally to relive our memories</p>
                 
                 <div class="story-carousel">
                     <div class="story-card">
-                        <div class="story-badge">Chapter 1</div>
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="First Meet">
+                        <span class="story-tag">CHAPTER 1</span>
+                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" alt="First Meet">
                         <h4>The Very Beginning 🌟</h4>
-                        <p class="story-date">12 Jan 2023</p>
-                        <p class="story-desc">Hari pertama takdir temukan kita berdua.</p>
+                        <span class="story-date">12 Jan 2023</span>
+                        <p>Hari pertama takdir temukan kita berdua.</p>
                     </div>
 
                     <div class="story-card">
-                        <div class="story-badge">Chapter 2</div>
-                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300" alt="First Date">
+                        <span class="story-tag">CHAPTER 2</span>
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400" alt="First Date">
                         <h4>Our First Date ☕</h4>
-                        <p class="story-date">14 Feb 2023</p>
-                        <p class="story-desc">Dating pertama yang penuh gelak tawa.</p>
+                        <span class="story-date">14 Feb 2023</span>
+                        <p>Dating pertama yang penuh gelak tawa.</p>
                     </div>
 
                     <div class="story-card">
-                        <div class="story-badge">Chapter 3</div>
-                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300" alt="Birthday">
+                        <span class="story-tag">CHAPTER 3</span>
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400" alt="Birthday">
                         <h4>Your Special Day 🎂</h4>
-                        <p class="story-date">Today</p>
-                        <p class="story-desc">Meraikan hari lahir kamu yang serba indah!</p>
+                        <span class="story-date">Today</span>
+                        <p>Meraikan hari lahir kamu yang serba indah!</p>
                     </div>
                 </div>
             </section>
 
-            <section class="section">
-                <h3>Treasured Memories 📸</h3>
+            <!-- GALLERY -->
+            <section class="glass-card section-card">
+                <h3 class="section-title">Treasured Memories 📸</h3>
                 <div class="photo-grid">
-                    <div class="photo-card" onclick="openPhoto('https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600', 'The moment we fell in love ✨')">
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="Memory 1">
-                        <p>First Date 🌹</p>
+                    <div class="photo-item" onclick="openPhoto('https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800', 'The moment we fell in love ✨')">
+                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" alt="Memory 1">
+                        <div class="photo-overlay"><span>First Date 🌹</span></div>
                     </div>
-                    <div class="photo-card" onclick="openPhoto('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600', 'Your sweet smile 💖')">
-                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300" alt="Memory 2">
-                        <p>Sweet Smiles ✨</p>
+                    <div class="photo-item" onclick="openPhoto('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800', 'Your sweet smile 💖')">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400" alt="Memory 2">
+                        <div class="photo-overlay"><span>Sweet Smiles ✨</span></div>
                     </div>
                 </div>
             </section>
 
-            <section class="section music-card">
-                <h3>Exclusive Playlist 🎵</h3>
+            <!-- MUSIC PLAYER -->
+            <section class="glass-card section-card">
+                <h3 class="section-title">Exclusive Playlist 🎵</h3>
                 <audio id="audio-player" src=""></audio>
                 <div class="player-controls">
-                    <p id="current-song-title">Select a song below 👇</p>
-                    <button id="play-btn" onclick="togglePlay()">▶ Play</button>
+                    <p id="current-song-title" class="song-label">Select a song below</p>
+                    <button id="play-btn" onclick="togglePlay()" class="gold-pill-btn">▶ Play</button>
                 </div>
                 <ul class="playlist">
-                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 'Shape of My Heart')">🎵 Shape of My Heart</li>
-                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', 'Angel Baby')">🎵 Angel Baby</li>
+                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 'Shape of My Heart')">🎵 Shape of My Heart — Backstreet Boys</li>
+                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', 'Angel Baby')">🎵 Angel Baby — Troye Sivan</li>
                 </ul>
             </section>
 
-            <section class="section jar-section">
-                <h3>Jar of Gratitude 🏺</h3>
-                <p>Tap to pick a note 📝</p>
+            <!-- NOTE JAR -->
+            <section class="glass-card section-card">
+                <h3 class="section-title">Jar of Gratitude 🏺</h3>
+                <p class="section-sub">Tap the jar to draw a note</p>
                 <div class="jar-icon" onclick="pickNote()">🏺</div>
                 <div id="jar-note-display" class="jar-note hidden"></div>
             </section>
 
-            <section class="section fireworks-section">
-                <h3>Make A Wish! 🎆</h3>
-                <button class="fireworks-btn" onclick="triggerFireworks()">✨ Launch Fireworks! ✨</button>
+            <!-- CELEBRATION BUTTON -->
+            <section class="glass-card section-card fireworks-section">
+                <h3 class="section-title">Make A Wish! 🎆</h3>
+                <button class="gold-pill-btn wide-btn" onclick="triggerFireworks()">✨ Launch Celebration Fireworks ✨</button>
             </section>
 
         </div>
     </div>
 
+    <!-- PHOTO ZOOM MODAL -->
     <div id="photo-modal" class="modal hidden" onclick="closePhoto()">
         <div class="modal-content">
-            <img id="modal-img" src="" alt="Full view">
+            <img id="modal-img" src="" alt="Full View">
             <p id="modal-caption"></p>
         </div>
     </div>
