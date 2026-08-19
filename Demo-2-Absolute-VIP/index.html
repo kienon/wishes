@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- THREE.JS & ORBIT CONTROLS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
@@ -32,7 +31,6 @@
 
     <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-    <!-- INTRO SCREEN -->
     <div id="screen-intro" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black transition-opacity duration-1000">
         <div onclick="startExperience()" class="neon-box px-8 py-12 rounded-3xl cursor-pointer text-center max-w-sm w-full animate-pulse hover:scale-105 transition-transform duration-300">
             <h1 class="neon-text text-3xl font-extrabold leading-snug mb-6 uppercase tracking-widest">
@@ -44,7 +42,6 @@
         </div>
     </div>
 
-    <!-- HINT TEXT -->
     <div id="hint-text" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-40 text-white/60 text-xs tracking-[0.2em] uppercase opacity-0 transition-opacity duration-1000 pointer-events-none text-center">
         Swipe 360° to explore<br><span class="text-[10px] text-pink-400">Pinch to Zoom</span>
     </div>
@@ -54,8 +51,8 @@
     <script>
         let scene, camera, renderer, controls;
         let earth, planets = [], meteors = [], wordGroup, heartStars;
-        let isZoomingIn = false; // Flag for cinematic intro
-        const targetCamPos = new THREE.Vector3(0, 150, 450); // Final camera resting position
+        let isZoomingIn = false; 
+        const targetCamPos = new THREE.Vector3(0, 150, 450); 
 
         // --- PROCEDURAL TEXTURE GENERATOR ---
         function createPlanetTexture(type) {
@@ -117,10 +114,9 @@
 
             // 1. SCENE & CAMERA
             scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x050011, 0.0010); // Lighter fog for deep space
+            scene.fog = new THREE.FogExp2(0x020008, 0.0008); // Deep space fog
             
-            camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 4000);
-            // CINEMATIC START POSITION (Far away in space)
+            camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 5000);
             camera.position.set(1000, 800, 2000); 
 
             // 2. RENDERER
@@ -134,14 +130,14 @@
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
             controls.autoRotate = true;
-            controls.autoRotateSpeed = 1.0;
-            controls.maxDistance = 1500;
+            controls.autoRotateSpeed = 0.8;
+            controls.maxDistance = 1800;
             controls.minDistance = 100;
 
             // 4. LIGHTING
-            scene.add(new THREE.AmbientLight(0x404040, 1.5)); 
-            const pointLight = new THREE.PointLight(0xffffff, 2, 2000);
-            pointLight.position.set(200, 300, 200);
+            scene.add(new THREE.AmbientLight(0x505050, 1.8)); 
+            const pointLight = new THREE.PointLight(0xffffff, 2.5, 2000);
+            pointLight.position.set(300, 400, 300);
             scene.add(pointLight);
 
             // 5. CENTER OBJECT: EARTH
@@ -154,7 +150,7 @@
             scene.add(earth);
 
             const atmosGeo = new THREE.SphereGeometry(48, 32, 32);
-            const atmosMat = new THREE.MeshBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.2, side: THREE.BackSide });
+            const atmosMat = new THREE.MeshBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.25, side: THREE.BackSide });
             earth.add(new THREE.Mesh(atmosGeo, atmosMat));
 
             // 6. CENTER TEXT: DEMO DAHLIA
@@ -162,28 +158,24 @@
             nameSprite.position.y = 70; 
             earth.add(nameSprite);
 
-            // 7. HEART CONSTELLATION (Glowing Heart Stars)
+            // 7. HEART CONSTELLATION
             const heartGeo = new THREE.BufferGeometry();
             const heartPoints = [];
-            // Mathematical formula for a Heart shape
-            for(let i=0; i<400; i++) {
+            for(let i=0; i<500; i++) {
                 let t = Math.random() * Math.PI * 2;
                 let x = 16 * Math.pow(Math.sin(t), 3);
                 let y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
                 
-                // Scale it up and add slight randomness for star cluster effect
-                x = (x * 12) + (Math.random() - 0.5) * 20;
-                y = (y * 12) + (Math.random() - 0.5) * 20;
-                let z = (Math.random() - 0.5) * 30;
+                x = (x * 12) + (Math.random() - 0.5) * 25;
+                y = (y * 12) + (Math.random() - 0.5) * 25;
+                let z = (Math.random() - 0.5) * 40;
                 
-                // Place behind Earth and above it
-                heartPoints.push(x, y + 150, z - 200);
+                heartPoints.push(x, y + 160, z - 220);
             }
             heartGeo.setAttribute('position', new THREE.Float32BufferAttribute(heartPoints, 3));
             
-            // Glowing Pink/Red material for heart stars
             const heartMat = new THREE.PointsMaterial({ 
-                color: 0xff1493, size: 4, transparent: true, opacity: 0.9, 
+                color: 0xff1493, size: 4.5, transparent: true, opacity: 0.95, 
                 blending: THREE.AdditiveBlending 
             });
             heartStars = new THREE.Points(heartGeo, heartMat);
@@ -204,55 +196,56 @@
                 return mesh;
             }
 
-            addPlanet(15, 'mars', 140, 0.008);
-            addPlanet(35, 'jupiter', 260, 0.003);
+            addPlanet(15, 'mars', 150, 0.007);
+            addPlanet(35, 'jupiter', 280, 0.0025);
 
-            const saturn = addPlanet(25, 'jupiter', 400, 0.002);
+            const saturn = addPlanet(25, 'jupiter', 420, 0.0018);
             const ringGeo = new THREE.TorusGeometry(40, 3, 16, 100);
-            const ringMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, transparent: true, opacity: 0.7 });
+            const ringMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, transparent: true, opacity: 0.75 });
             const ring = new THREE.Mesh(ringGeo, ringMat);
             ring.rotation.x = Math.PI / 2.2;
             saturn.add(ring);
 
-            // 9. REAL METEORS (Irregular Asteroids with Fire Tails)
-            const rockGeo = new THREE.DodecahedronGeometry(3, 0); // Irregular jagged rock shape
-            const rockMat = new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.9 });
-            const tailGeo = new THREE.ConeGeometry(2, 25, 8); // Fire tail
-            const tailMat = new THREE.MeshBasicMaterial({ color: 0xff6600, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+            // 9. REALISTIC 3D METEORS (Batu Angkasa & Ekor Api Terang)
+            const rockGeo = new THREE.DodecahedronGeometry(4, 1); 
+            const rockMat = new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.9, metalness: 0.2 });
+            const tailGeo = new THREE.ConeGeometry(3, 40, 8); 
+            const tailMat = new THREE.MeshBasicMaterial({ color: 0xff4500, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
 
-            for(let i=0; i<40; i++) {
-                const rock = new THREE.Mesh(rockGeo, rockMat);
-                rock.scale.set(Math.random() + 0.5, Math.random() + 0.5, Math.random() + 0.5); // Randomize rock shape
+            for(let i=0; i<60; i++) {
+                const meteorGroup = new THREE.Group();
                 
-                // Add burning tail behind the rock
+                const rock = new THREE.Mesh(rockGeo, rockMat);
+                rock.scale.set(Math.random() * 1.5 + 0.5, Math.random() * 1.5 + 0.5, Math.random() * 1.5 + 0.5);
+                meteorGroup.add(rock);
+
                 const tail = new THREE.Mesh(tailGeo, tailMat);
                 tail.rotation.x = Math.PI / 2;
-                tail.position.z = 12; // Push tail behind the rock
-                rock.add(tail);
+                tail.position.z = 20; 
+                meteorGroup.add(tail);
 
-                // Set random starting position in a large sphere
-                rock.position.set(
-                    (Math.random() - 0.5) * 2000,
-                    (Math.random() - 0.5) * 2000,
-                    (Math.random() - 0.5) * 2000
+                meteorGroup.position.set(
+                    (Math.random() - 0.5) * 2500,
+                    (Math.random() - 0.5) * 2500,
+                    (Math.random() - 0.5) * 2500
                 );
                 
-                // Point rock randomly
-                rock.lookAt(0, 0, 0); 
-                rock.userData = { speed: Math.random() * 8 + 4 }; // Fast speed
-                scene.add(rock);
-                meteors.push(rock);
+                meteorGroup.lookAt(0, 0, 0);
+                meteorGroup.userData = { speed: Math.random() * 12 + 6 }; // Laju meluncur
+                
+                scene.add(meteorGroup);
+                meteors.push(meteorGroup);
             }
 
-            // 10. BACKGROUND STARS
+            // 10. DENSE BACKGROUND STARS (Padat & Merelip)
             const starsGeo = new THREE.BufferGeometry();
-            const starsMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.5, transparent: true, opacity: 0.7 });
+            const starsMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.8, transparent: true, opacity: 0.9 });
             const starsArray = [];
-            for (let i = 0; i < 4000; i++) {
+            for (let i = 0; i < 10000; i++) { // Dinaikkan kepada 10,000 bintang!
                 starsArray.push(
-                    THREE.MathUtils.randFloatSpread(3000),
-                    THREE.MathUtils.randFloatSpread(3000),
-                    THREE.MathUtils.randFloatSpread(3000)
+                    THREE.MathUtils.randFloatSpread(4000),
+                    THREE.MathUtils.randFloatSpread(4000),
+                    THREE.MathUtils.randFloatSpread(4000)
                 );
             }
             starsGeo.setAttribute('position', new THREE.Float32BufferAttribute(starsArray, 3));
@@ -268,12 +261,12 @@
             ];
             const colors = ['#e0aaff', '#ff99c8', '#90e0ef', '#ffffff', '#ffd60a'];
 
-            for(let i = 0; i < 80; i++) {
+            for(let i = 0; i < 90; i++) {
                 const word = romanticWords[Math.floor(Math.random() * romanticWords.length)];
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 const sprite = createTextSprite(word, color, Math.random() * 15 + 15);
                 
-                const radius = Math.random() * 500 + 150;
+                const radius = Math.random() * 600 + 180;
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.acos(Math.random() * 2 - 1);
                 
@@ -297,12 +290,9 @@
         function animate() {
             requestAnimationFrame(animate);
             
-            // CINEMATIC CAMERA ZOOM (Smooth Lerp)
+            // CINEMATIC CAMERA ZOOM
             if (isZoomingIn) {
-                // Lerp moves camera position smoothly towards target
                 camera.position.lerp(targetCamPos, 0.015);
-                
-                // If close enough to target, stop zooming
                 if (camera.position.distanceTo(targetCamPos) < 5) {
                     isZoomingIn = false;
                 }
@@ -311,8 +301,8 @@
             // Pulse Heart Stars
             if(heartStars) {
                 const time = Date.now() * 0.003;
-                heartStars.material.opacity = (Math.sin(time) * 0.3) + 0.7; // Pulsing effect
-                heartStars.rotation.y = Math.sin(time * 0.2) * 0.1; // Gentle sway
+                heartStars.material.opacity = (Math.sin(time) * 0.3) + 0.7; 
+                heartStars.rotation.y = Math.sin(time * 0.2) * 0.1; 
             }
 
             // Spin Earth
@@ -324,26 +314,25 @@
                 p.mesh.rotation.y += 0.01; 
             });
 
-            // Shoot Meteors (Fly forward relative to their own rotation)
+            // Realistic Meteor Shower Motion
             meteors.forEach(m => {
-                m.translateZ(-m.userData.speed); // Move forward
-                m.rotation.z += 0.05; // Spin the rock slightly
+                m.translateZ(-m.userData.speed); 
+                m.rotation.x += 0.02;
+                m.rotation.y += 0.03; 
                 
-                // Reset meteor if it flies too far away
-                if(m.position.length() > 1500) {
+                if(m.position.length() > 2500) {
                     m.position.set(
-                        (Math.random() - 0.5) * 2000,
-                        (Math.random() - 0.5) * 2000,
-                        (Math.random() - 0.5) * 2000
+                        (Math.random() - 0.5) * 3000,
+                        (Math.random() - 0.5) * 3000,
+                        (Math.random() - 0.5) * 3000
                     );
-                    m.lookAt(0, 0, 0); // Point back towards center
+                    m.lookAt(0, 0, 0); 
                 }
             });
             
-            // Slowly rotate word cloud
+            // Rotate word cloud
             if(wordGroup) wordGroup.rotation.y -= 0.001; 
 
-            // Controls update (autoRotate continues regardless of camera zoom)
             controls.update();
             renderer.render(scene, camera);
         }
@@ -359,7 +348,7 @@
                 document.getElementById('hint-text').style.opacity = '1';
                 
                 init3D();
-                isZoomingIn = true; // Trigger Cinematic Zoom
+                isZoomingIn = true; 
 
                 setTimeout(() => {
                     document.getElementById('hint-text').style.opacity = '0';
