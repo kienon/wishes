@@ -11,7 +11,6 @@
         body { font-family: 'Poppins', sans-serif; }
         .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
 
-        /* Cinematic Mesh Gradient Animation */
         @keyframes meshGlow {
             0% { transform: translate(0px, 0px) scale(1); }
             33% { transform: translate(30px, -50px) scale(1.1); }
@@ -21,7 +20,6 @@
         .mesh-bg-1 { animation: meshGlow 12s ease-in-out infinite; }
         .mesh-bg-2 { animation: meshGlow 15s ease-in-out infinite reverse; }
 
-        /* Smooth Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050208; }
         ::-webkit-scrollbar-thumb { background: #26111e; border-radius: 3px; }
@@ -67,7 +65,7 @@
         <!-- BENTO CONTAINER -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             
-            <!-- BENTO ITEM 1: FLAGSHIP ABSOLUTE VIP (Double Span - Besar & Menyerlah) -->
+            <!-- 1. ABSOLUTE VIP (Double Span) -->
             <div class="md:col-span-2 bg-gradient-to-br from-white/[0.07] to-white/[0.02] border border-[#d4af37]/40 hover:border-[#d4af37] rounded-3xl p-7 sm:p-8 backdrop-blur-2xl flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-1.5 group relative overflow-hidden">
                 <div class="absolute -right-12 -top-12 w-48 h-48 bg-[#d4af37]/10 rounded-full blur-3xl group-hover:bg-[#d4af37]/20 transition-all pointer-events-none"></div>
                 <div>
@@ -89,7 +87,7 @@
                 </a>
             </div>
 
-            <!-- BENTO ITEM 2: DREAMY AESTHETIC (Vertical Tall) -->
+            <!-- 2. WHIMSICAL DREAMY 3D -->
             <div class="bg-white/[0.04] border border-white/10 hover:border-[#d4af37]/40 rounded-3xl p-6 backdrop-blur-2xl flex flex-col justify-between shadow-2xl transition-all duration-500 hover:-translate-y-1.5 group">
                 <div>
                     <div class="flex justify-between items-center mb-4">
@@ -108,7 +106,7 @@
                 </a>
             </div>
 
-            <!-- BENTO ITEM 3: ANNIVERSARY RED BOX -->
+            <!-- 3. ANNIVERSARY RED BOX -->
             <div class="bg-white/[0.04] border border-white/10 hover:border-[#d4af37]/40 rounded-3xl p-6 backdrop-blur-2xl flex flex-col justify-between shadow-2xl transition-all duration-500 hover:-translate-y-1.5 group">
                 <div>
                     <div class="flex justify-between items-center mb-4">
@@ -127,7 +125,7 @@
                 </a>
             </div>
 
-            <!-- BENTO ITEM 4: PREMIUM EDITION -->
+            <!-- 4. PREMIUM EDITION -->
             <div class="bg-white/[0.04] border border-white/10 hover:border-[#d4af37]/40 rounded-3xl p-6 backdrop-blur-2xl flex flex-col justify-between shadow-2xl transition-all duration-500 hover:-translate-y-1.5 group">
                 <div>
                     <div class="flex justify-between items-center mb-4">
@@ -146,12 +144,50 @@
                 </a>
             </div>
 
-            <!-- BENTO ITEM 5: STANDARD DEMO 1 (Compact) -->
+            <!-- 5. DEMO STANDARD -->
+            <div class="bg-white/[0.04] border border-white/10 hover:border-[#d4af37]/40 rounded-3xl p-6 backdrop-blur-2xl flex flex-col justify-between shadow-2xl transition-all duration-500 hover:-translate-y-1.5 group">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] tracking-wider uppercase bg-amber-500/10 text-amber-300 px-3 py-1 rounded-full font-medium border border-amber-500/20">Standard Tier</span>
+                        <span class="font-serif-luxury text-base font-bold text-[#fcf6ba]">Standard</span>
+                    </div>
+                    <h3 class="font-serif-luxury text-2xl font-bold text-white mb-2 group-hover:text-[#fcf6ba] transition-colors">
+                        Demo Standard
+                    </h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed mb-6 font-light">
+                        Reka bentuk kad estetik pastel yang bersih, elegan, dilengkapi galeri mini dan butang konfeti perayaan yang mesra peranti.
+                    </p>
+                </div>
+                <a href="./Demo-Standard/" target="_blank" class="w-full py-3 rounded-full bg-white/[0.05] border border-white/15 text-[#f7eddc] font-medium text-xs tracking-wider uppercase text-center hover:bg-white/[0.1] active:scale-95 transition-all block">
+                    Buka Demo →
+                </a>
+            </div>
+
+            <!-- 6. DEMO BASIC -->
+            <div class="bg-white/[0.04] border border-white/10 hover:border-[#d4af37]/40 rounded-3xl p-6 backdrop-blur-2xl flex flex-col justify-between shadow-2xl transition-all duration-500 hover:-translate-y-1.5 group">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] tracking-wider uppercase bg-emerald-500/10 text-emerald-300 px-3 py-1 rounded-full font-medium border border-emerald-500/20">Budget Tier</span>
+                        <span class="font-serif-luxury text-base font-bold text-[#fcf6ba]">Basic RM15</span>
+                    </div>
+                    <h3 class="font-serif-luxury text-2xl font-bold text-white mb-2 group-hover:text-[#fcf6ba] transition-colors">
+                        Demo Basic
+                    </h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed mb-6 font-light">
+                        Pilihan asas yang ringkas, comel, dan pantas dimuatkan. Sesuai untuk ucapan hari lahir ringkas dengan kesan konfeti ringkas.
+                    </p>
+                </div>
+                <a href="./Demo-Basic/" target="_blank" class="w-full py-3 rounded-full bg-white/[0.05] border border-white/15 text-[#f7eddc] font-medium text-xs tracking-wider uppercase text-center hover:bg-white/[0.1] active:scale-95 transition-all block">
+                    Buka Demo →
+                </a>
+            </div>
+
+            <!-- 7. DEMO 1 (Classic) -->
             <div class="bg-white/[0.04] border border-white/10 hover:border-[#d4af37]/40 rounded-3xl p-6 backdrop-blur-2xl flex flex-col justify-between shadow-2xl transition-all duration-500 hover:-translate-y-1.5 group">
                 <div>
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-[10px] tracking-wider uppercase bg-blue-500/10 text-blue-300 px-3 py-1 rounded-full font-medium border border-blue-500/20">Classic</span>
-                        <span class="font-serif-luxury text-base font-bold text-[#fcf6ba]">Standard</span>
+                        <span class="font-serif-luxury text-base font-bold text-[#fcf6ba]">Demo 1</span>
                     </div>
                     <h3 class="font-serif-luxury text-2xl font-bold text-white mb-2 group-hover:text-[#fcf6ba] transition-colors">
                         Demo Standard 1
