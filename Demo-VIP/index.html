@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Experience - For You, Dalia 💎</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="flower-container"></div>
+
+    <div id="lock-screen" class="screen">
+        <div class="card luxury-card">
+            <div class="vip-badge">👑 ABSOLUTE VIP</div>
+            <div class="icon">✨</div>
+            <h2>For You, Dalia</h2>
+            <p class="subtitle">Enter the VIP Passcode</p>
+            
+            <div class="code-dots" id="code-dots">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="keypad">
+                <button onclick="pressNum('1')">1</button>
+                <button onclick="pressNum('2')">2</button>
+                <button onclick="pressNum('3')">3</button>
+                <button onclick="pressNum('4')">4</button>
+                <button onclick="pressNum('5')">5</button>
+                <button onclick="pressNum('6')">6</button>
+                <button onclick="pressNum('7')">7</button>
+                <button onclick="pressNum('8')">8</button>
+                <button onclick="pressNum('9')">9</button>
+                <button onclick="clearCode()">✕</button>
+                <button onclick="pressNum('0')">0</button>
+                <button onclick="submitCode()">↵</button>
+            </div>
+
+            <p class="hint">Hint: 111111 💎</p>
+            <p id="error-msg" class="error-msg"></p>
+        </div>
+    </div>
+
+    <div id="gift-screen" class="screen hidden">
+        <div class="gift-container" onclick="openGift()">
+            <p class="gold-text">Tap the luxury box to unwrap your surprise 🎁</p>
+            <div class="gift-box">🎁</div>
+        </div>
+    </div>
+
+    <div id="main-content" class="screen hidden">
+        <div class="container">
+
+            <header class="header">
+                <div class="vip-pill">💎 ABSOLUTE VIP EDITION</div>
+                <h1>HAPPY BIRTHDAY DALIA</h1>
+                <p class="sub-header">A Celebration of You ✨</p>
+            </header>
+
+            <section class="section counter-card">
+                <h3>Days We've Shared Together ⏳</h3>
+                <div class="timer-grid">
+                    <div class="time-box"><span id="days">00</span><p>Days</p></div>
+                    <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
+                    <div class="time-box"><span id="minutes">00</span><p>Mins</p></div>
+                    <div class="time-box"><span id="seconds">00</span><p>Secs</p></div>
+                </div>
+            </section>
+
+            <section class="section quiz-card" id="quiz-section">
+                <h3>Interactive Love Quiz 🎮</h3>
+                <p class="quiz-sub">Answer this question to unlock the next surprise!</p>
+                <p id="quiz-question" class="question-text">Dimanakah tempat kenangan first date kita? 🤔</p>
+                <div class="quiz-options">
+                    <button onclick="checkAnswer(false)">Cafe Santai</button>
+                    <button onclick="checkAnswer(true)">Taman Bunga 🌹</button>
+                    <button onclick="checkAnswer(false)">Panggung Wayang</button>
+                </div>
+                <p id="quiz-feedback" class="quiz-feedback"></p>
+            </section>
+
+            <section class="section envelope-section hidden" id="envelope-section">
+                <h3>A Special Secret Letter ✉️</h3>
+                <p>Tap the envelope to open</p>
+                <div class="envelope-wrapper" onclick="toggleEnvelope()">
+                    <div class="envelope" id="envelope">
+                        <div class="front flap"></div>
+                        <div class="front pocket"></div>
+                        <div class="letter">
+                            <p class="letter-preview">For My Dearest Dalia 💖</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section letter-box hidden" id="full-letter">
+                <h3>My Heartfelt Letter 💌</h3>
+                <p class="letter-body">
+                    My Dearest Dalia,<br><br>
+                    Every single second with you feels like a beautiful dream come true. You bring light, warmth, and magic into my life in ways words can never fully explain.<br><br>
+                    Thank you for being my strength, my happiness, and my favorite person. On this special day, I wish you endless laughter, peace, and all the happiness in the world.<br><br>
+                    Forever yours, ❤️
+                </p>
+            </section>
+
+            <section class="section vn-card">
+                <h3>Voice Note For You 🎤</h3>
+                <p>Listen to a special voice message ❤️</p>
+                <div class="vn-player">
+                    <button id="vn-btn" onclick="toggleVN()">▶ Listen Voice Note</button>
+                    <audio id="vn-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"></audio>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3>A VIP Digital Bouquet 💐</h3>
+                <p class="instruction">Touch each flower to reveal its secret message</p>
+                <div class="bouquet-grid">
+                    <button onclick="showFlowerMsg('🌸 Kamu adalah orang paling istimewa dlm hidup aku!')">🌸</button>
+                    <button onclick="showFlowerMsg('🌷 Senyuman kamu penawar duka aku.')">🌷</button>
+                    <button onclick="showFlowerMsg('🌻 Terima kasih sebab sentiasa percayakan aku.')">🌻</button>
+                    <button onclick="showFlowerMsg('🌹 I love you more than words can say.')">🌹</button>
+                </div>
+                <div id="flower-popup" class="flower-popup hidden"></div>
+            </section>
+
+            <section class="section">
+                <h3>Our Treasury Memories 📸</h3>
+                <div class="photo-grid">
+                    <div class="photo-card" onclick="openPhoto('https://via.placeholder.com/500x600/1e0a24/d4af37?text=Memory+1', 'The moment we fell in love ✨')">
+                        <img src="https://via.placeholder.com/150/1e0a24/d4af37?text=Photo+1" alt="Memory">
+                        <p>First Date 🌹</p>
+                    </div>
+                    <div class="photo-card" onclick="openPhoto('https://via.placeholder.com/500x600/1e0a24/d4af37?text=Memory+2', 'Your sweet smile 💖')">
+                        <img src="https://via.placeholder.com/150/1e0a24/d4af37?text=Photo+2" alt="Memory">
+                        <p>Sweet Smiles ✨</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3>Our Journey Together 📖</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="date">Chapter 1</span>
+                        <h4>First Connection 🌟</h4>
+                        <p>The day our paths crossed.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">Chapter 2</span>
+                        <h4>Our Special Day 🎂</h4>
+                        <p>Celebrating another milestone together!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section music-card">
+                <h3>Exclusive Playlist 🎵</h3>
+                <audio id="audio-player" src=""></audio>
+                <div class="player-controls">
+                    <p id="current-song-title">Select a song below 👇</p>
+                    <button id="play-btn" onclick="togglePlay()">▶ Play</button>
+                </div>
+                <ul class="playlist">
+                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 'Shape of My Heart')">🎵 Shape of My Heart</li>
+                    <li onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', 'Angel Baby')">🎵 Angel Baby</li>
+                </ul>
+            </section>
+
+            <section class="section jar-section">
+                <h3>Jar of Gratitude 🏺</h3>
+                <p>Tap to pick a gratitude note 📝</p>
+                <div class="jar-icon" onclick="pickNote()">🏺</div>
+                <div id="jar-note-display" class="jar-note hidden"></div>
+            </section>
+
+            <section class="section fireworks-section">
+                <h3>Make A Wish! 🎆</h3>
+                <button class="fireworks-btn" onclick="triggerFireworks()">✨ Celebrate & Launch Fireworks! ✨</button>
+            </section>
+
+        </div>
+    </div>
+
+    <div id="photo-modal" class="modal hidden" onclick="closePhoto()">
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="Full view">
+            <p id="modal-caption"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
