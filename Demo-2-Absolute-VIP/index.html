@@ -3,184 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Galaxy - What You Mean To Me 🌌</title>
-    <!-- Tailwind CSS -->
+    <title>You Are My Universe 🌌</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- THREE.JS & ORBIT CONTROLS VIA CDN -->
+    <!-- THREE.JS & ORBIT CONTROLS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <style>
-        body { margin: 0; overflow: hidden; background-color: #000; font-family: 'Poppins', sans-serif; }
-        #webgl-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        body { margin: 0; overflow: hidden; background-color: #000; font-family: 'Poppins', sans-serif; touch-action: none; }
+        #webgl-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; opacity: 0; transition: opacity 1.5s ease; }
         
-        /* NEON INTRO SCREEN */
+        /* NEON INTRO */
         .neon-box {
             border: 2px solid #ff007f;
-            box-shadow: 0 0 15px #ff007f, inset 0 0 15px #ff007f;
-            background: rgba(20, 0, 10, 0.8);
-            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px #ff007f, inset 0 0 20px #ff007f;
+            background: rgba(15, 0, 10, 0.85);
+            backdrop-filter: blur(10px);
         }
         .neon-text {
             color: #fff;
-            text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
+            text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 40px #ff007f;
         }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO -->
     <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-    <!-- INTRO NEON SCREEN -->
     <div id="screen-intro" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black transition-opacity duration-1000">
         <div onclick="startExperience()" class="neon-box px-8 py-12 rounded-3xl cursor-pointer text-center max-w-sm w-full animate-pulse hover:scale-105 transition-transform duration-300">
-            <h1 class="neon-text text-2xl md:text-3xl font-bold leading-snug mb-8 uppercase tracking-wide">
-                What You Mean<br>To Me, My Love
+            <h1 class="neon-text text-3xl font-extrabold leading-snug mb-6 uppercase tracking-widest">
+                Center Of My<br>Universe
             </h1>
-            <p class="text-pink-300 text-sm font-medium tracking-wider">
-                ✨ Tap to discover Princess ✨
+            <p class="text-pink-300 text-xs font-semibold tracking-[0.3em] uppercase">
+                ✨ Tap to explore ✨
             </p>
         </div>
     </div>
 
-    <!-- HINT TEXT -->
-    <div id="hint-text" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-40 text-white/50 text-xs tracking-widest uppercase opacity-0 transition-opacity duration-1000 pointer-events-none">
-        Swipe & Pinch to explore 360°
+    <div id="hint-text" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-40 text-white/60 text-xs tracking-[0.2em] uppercase opacity-0 transition-opacity duration-1000 pointer-events-none text-center">
+        Swipe 360° to explore<br><span class="text-[10px] text-pink-400">Pinch to Zoom</span>
     </div>
 
-    <!-- 3D CANVAS CONTAINER -->
     <div id="webgl-container"></div>
 
     <script>
         let scene, camera, renderer, controls;
-        let planet, wordGroup, stars;
+        let earth, planets = [], meteors = [], wordGroup;
+
+        // --- PROCEDURAL TEXTURE GENERATOR ---
+        // Generates planet textures instantly without relying on external images
+        function createPlanetTexture(type) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512; canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            if (type === 'earth') {
+                ctx.fillStyle = '#0b3d91'; // Ocean blue
+                ctx.fillRect(0, 0, 512, 512);
+                ctx.fillStyle = '#4b8b3b'; // Land green
+                for(let i=0; i<40; i++) {
+                    ctx.beginPath();
+                    ctx.arc(Math.random()*512, Math.random()*512, Math.random()*40+20, 0, Math.PI*2);
+                    ctx.fill();
+                }
+            } else if (type === 'jupiter') {
+                for(let i=0; i<512; i+=8) {
+                    ctx.fillStyle = (i % 30 < 15) ? '#c88b3a' : '#a56c2f'; // Gas stripes
+                    ctx.fillRect(0, i, 512, 8);
+                }
+            } else if (type === 'mars') {
+                ctx.fillStyle = '#c1440e'; // Mars red
+                ctx.fillRect(0, 0, 512, 512);
+                ctx.fillStyle = '#e77d11'; 
+                for(let i=0; i<50; i++) {
+                    ctx.beginPath();
+                    ctx.arc(Math.random()*512, Math.random()*512, Math.random()*20, 0, Math.PI*2);
+                    ctx.fill();
+                }
+            }
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        // --- BILLBOARD TEXT GENERATOR ---
+        function createTextSprite(message, color, size) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = 1024; canvas.height = 256;
+            
+            context.font = "Bold 80px 'Poppins', sans-serif";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillStyle = color;
+            
+            // Text Glow
+            context.shadowColor = color;
+            context.shadowBlur = 20;
+            context.fillText(message, canvas.width / 2, canvas.height / 2);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
+            const sprite = new THREE.Sprite(spriteMaterial);
+            sprite.scale.set(size * 4, size, 1); 
+            return sprite;
+        }
 
         function init3D() {
             const container = document.getElementById('webgl-container');
 
-            // 1. SCENE SETUP
+            // 1. SCENE & CAMERA
             scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x000000, 0.002);
+            scene.fog = new THREE.FogExp2(0x050011, 0.0015);
+            camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 3000);
+            camera.position.set(0, 150, 450);
 
-            // 2. CAMERA SETUP
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
-            camera.position.set(0, 150, 400);
-
-            // 3. RENDERER SETUP
+            // 2. RENDERER
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(window.innerWidth, window.innerHeight);
             container.appendChild(renderer.domElement);
 
-            // 4. ORBIT CONTROLS (Swipe, Pan, Zoom)
+            // 3. CONTROLS
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.autoRotate = true; // Auto spin slowly
-            controls.autoRotateSpeed = 1.0;
-            controls.maxDistance = 800; // Limit zoom out
-            controls.minDistance = 100; // Limit zoom in
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+            controls.maxDistance = 1000;
+            controls.minDistance = 80;
 
-            // 5. CREATE 3D PLANET (Core + Wireframe outer)
-            const planetGeometry = new THREE.SphereGeometry(40, 32, 32);
-            
-            // Solid inner glowing core
-            const coreMaterial = new THREE.MeshBasicMaterial({ color: 0x220044 });
-            const planetCore = new THREE.Mesh(planetGeometry, coreMaterial);
-            scene.add(planetCore);
+            // 4. LIGHTING
+            scene.add(new THREE.AmbientLight(0x404040, 1.5)); // Soft ambient
+            const pointLight = new THREE.PointLight(0xffffff, 2, 2000);
+            pointLight.position.set(200, 300, 200);
+            scene.add(pointLight);
 
-            // Wireframe outer sphere
-            const wireGeometry = new THREE.SphereGeometry(45, 16, 16);
-            const wireMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0xff007f, 
-                wireframe: true,
-                transparent: true,
-                opacity: 0.3
+            // 5. CENTER OBJECT: EARTH
+            const earthGeo = new THREE.SphereGeometry(45, 64, 64);
+            const earthMat = new THREE.MeshStandardMaterial({ 
+                map: createPlanetTexture('earth'), 
+                roughness: 0.6, metalness: 0.1 
             });
-            planet = new THREE.Mesh(wireGeometry, wireMaterial);
-            scene.add(planet);
+            earth = new THREE.Mesh(earthGeo, earthMat);
+            scene.add(earth);
 
-            // 6. CREATE 3D STARS (Particles)
-            const starsGeometry = new THREE.BufferGeometry();
-            const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.5, transparent: true, opacity: 0.8 });
-            
-            const starsVertices = [];
-            for (let i = 0; i < 2000; i++) {
-                const x = THREE.MathUtils.randFloatSpread(1500);
-                const y = THREE.MathUtils.randFloatSpread(1500);
-                const z = THREE.MathUtils.randFloatSpread(1500);
-                starsVertices.push(x, y, z);
+            // Glowing Atmosphere for Earth
+            const atmosGeo = new THREE.SphereGeometry(48, 32, 32);
+            const atmosMat = new THREE.MeshBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.2, side: THREE.BackSide });
+            earth.add(new THREE.Mesh(atmosGeo, atmosMat));
+
+            // 6. CENTER TEXT: DALIA (Always faces camera)
+            const nameSprite = createTextSprite("DALIA 💖", "#ff007f", 80);
+            nameSprite.position.y = 65; // Hover above Earth
+            earth.add(nameSprite);
+
+            // 7. ORBITING PLANETS
+            function addPlanet(size, textureType, distance, speed) {
+                const geo = new THREE.SphereGeometry(size, 32, 32);
+                const mat = new THREE.MeshStandardMaterial({ map: createPlanetTexture(textureType), roughness: 0.7 });
+                const mesh = new THREE.Mesh(geo, mat);
+                
+                // Orbit pivot
+                const pivot = new THREE.Group();
+                scene.add(pivot);
+                mesh.position.x = distance;
+                pivot.add(mesh);
+
+                planets.push({ pivot: pivot, mesh: mesh, speed: speed });
+                return mesh;
             }
-            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-            stars = new THREE.Points(starsGeometry, starsMaterial);
-            scene.add(stars);
 
-            // 7. CREATE FLOATING WORDS (SPRITES)
-            // Sprites in Three.js ALWAYS face the camera automatically! (Perfect Billboarding)
+            // Add Mars & Jupiter
+            addPlanet(15, 'mars', 120, 0.008);
+            const jupiter = addPlanet(35, 'jupiter', 220, 0.003);
+
+            // Add Saturn with Rings
+            const saturn = addPlanet(25, 'jupiter', 350, 0.002);
+            const ringGeo = new THREE.TorusGeometry(40, 3, 16, 100);
+            const ringMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, transparent: true, opacity: 0.7 });
+            const ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.rotation.x = Math.PI / 2.2;
+            saturn.add(ring);
+
+            // 8. METEOR SHOWER (3D Shooting Stars)
+            const meteorGeo = new THREE.CylinderGeometry(0.5, 0.5, 30, 8);
+            const meteorMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+            
+            for(let i=0; i<30; i++) {
+                const meteor = new THREE.Mesh(meteorGeo, meteorMat);
+                meteor.position.set(
+                    (Math.random() - 0.5) * 1000,
+                    (Math.random() - 0.5) * 1000,
+                    (Math.random() - 0.5) * 1000
+                );
+                // Aim meteors diagonally
+                meteor.rotation.x = Math.PI / 4;
+                meteor.rotation.z = Math.PI / 4;
+                scene.add(meteor);
+                meteors.push(meteor);
+            }
+
+            // 9. BACKGROUND STARS
+            const starsGeo = new THREE.BufferGeometry();
+            const starsMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.2, transparent: true, opacity: 0.8 });
+            const starsArray = [];
+            for (let i = 0; i < 3000; i++) {
+                starsArray.push(
+                    THREE.MathUtils.randFloatSpread(2000),
+                    THREE.MathUtils.randFloatSpread(2000),
+                    THREE.MathUtils.randFloatSpread(2000)
+                );
+            }
+            starsGeo.setAttribute('position', new THREE.Float32BufferAttribute(starsArray, 3));
+            scene.add(new THREE.Points(starsGeo, starsMat));
+
+            // 10. FLOATING ROMANTIC WORDS
             wordGroup = new THREE.Group();
             scene.add(wordGroup);
-
             const romanticWords = [
-                "My Everything", "Sayang", "Cinta", "Beautiful", "Gorgeous", 
-                "My Sun", "My Moon", "Bidadari", "Forever", "Eternity", 
-                "Manja", "Rindu", "Kesayangan", "Precious", "My Heart", 
-                "Soulmate", "Sweetheart", "Kehidupan", "Universe", "Bintang", 
-                "Syurga", "Bahagia", "Senyumanmu", "Safe Place", "Perfect"
+                "My Everything", "Sayang", "Cinta", "Beautiful", "Bidadari", 
+                "Forever", "Soulmate", "Kesayangan", "Precious", "My Heart", 
+                "Syurga", "Bahagia", "Senyumanmu", "Perfect", "Destiny"
             ];
             const colors = ['#e0aaff', '#ff99c8', '#90e0ef', '#ffffff', '#ffd60a'];
 
-            // Function to generate text as a canvas texture
-            function createTextSprite(message, color) {
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = 512; // High res canvas for crisp text
-                canvas.height = 128;
-                
-                context.font = "Bold 40px 'Poppins', Arial";
-                context.fillStyle = color;
-                context.textAlign = "center";
-                context.textBaseline = "middle";
-                
-                // Add Glow effect to text
-                context.shadowColor = color;
-                context.shadowBlur = 15;
-                
-                context.fillText(message, canvas.width / 2, canvas.height / 2);
-                
-                const texture = new THREE.CanvasTexture(canvas);
-                const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
-                const sprite = new THREE.Sprite(spriteMaterial);
-                
-                // Scale sprite to look correct in 3D space
-                sprite.scale.set(100, 25, 1); 
-                return sprite;
-            }
-
-            // Scatter words around the planet
-            for(let i = 0; i < 150; i++) {
+            for(let i = 0; i < 80; i++) {
                 const word = romanticWords[Math.floor(Math.random() * romanticWords.length)];
                 const color = colors[Math.floor(Math.random() * colors.length)];
+                const sprite = createTextSprite(word, color, Math.random() * 20 + 20);
                 
-                const sprite = createTextSprite(word, color);
-                
-                // Random position in a donut/sphere shape around the planet
-                const radius = Math.random() * 300 + 70;
+                const radius = Math.random() * 400 + 100;
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.acos(Math.random() * 2 - 1);
                 
-                // Flatten the sphere slightly to look like a galaxy disk
                 sprite.position.x = radius * Math.sin(phi) * Math.cos(theta);
-                sprite.position.y = (radius * Math.sin(phi) * Math.sin(theta)) * 0.3; // flatten Y axis
+                sprite.position.y = (radius * Math.sin(phi) * Math.sin(theta)) * 0.4;
                 sprite.position.z = radius * Math.cos(phi);
                 
                 wordGroup.add(sprite);
             }
 
-            // Handle Resize
-            window.addEventListener('resize', onWindowResize, false);
+            window.addEventListener('resize', onWindowResize);
             animate();
         }
 
@@ -193,22 +258,36 @@
         function animate() {
             requestAnimationFrame(animate);
             
-            // Slowly rotate the wireframe planet
-            if(planet) {
-                planet.rotation.y += 0.005;
-                planet.rotation.x += 0.002;
-            }
+            // Spin Earth
+            if(earth) earth.rotation.y += 0.002;
             
-            // Slowly rotate the entire word group
-            if(wordGroup) {
-                wordGroup.rotation.y -= 0.001; // Counter rotation to the camera autoRotate
-            }
+            // Orbit Planets
+            planets.forEach(p => {
+                p.pivot.rotation.y += p.speed;
+                p.mesh.rotation.y += 0.01; // Planet self-rotation
+            });
 
-            controls.update(); // Required for damping & autoRotate
+            // Shoot Meteors
+            meteors.forEach(m => {
+                m.position.x -= 5;
+                m.position.y -= 5;
+                m.position.z -= 5;
+                if(m.position.y < -500) {
+                    m.position.set(
+                        Math.random() * 1000,
+                        500 + Math.random() * 500,
+                        Math.random() * 1000
+                    );
+                }
+            });
+            
+            // Slowly rotate word cloud
+            if(wordGroup) wordGroup.rotation.y -= 0.001; 
+
+            controls.update();
             renderer.render(scene, camera);
         }
 
-        // START TRIGGER
         function startExperience() {
             const music = document.getElementById('bg-music');
             if(music) music.play().catch(e => console.log(e));
@@ -219,7 +298,6 @@
                 document.getElementById('webgl-container').style.opacity = '1';
                 document.getElementById('hint-text').style.opacity = '1';
                 
-                // Initialize 3D ONLY when started to save battery/performance before interaction
                 init3D();
 
                 setTimeout(() => {
