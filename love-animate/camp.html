@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Campfire Animation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #060a12;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 50% 72%, #0f172a 0%, #060a12 80%);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    /* Background Trees Silhouette */
+    .forest {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60%;
+      background: repeating-linear-gradient(
+        90deg,
+        #0b1326 0px,
+        #0b1326 30px,
+        transparent 30px,
+        transparent 60px
+      );
+      clip-path: polygon(0 100%, 100% 100%, 100% 40%, 85% 60%, 70% 35%, 50% 55%, 30% 30%, 15% 50%, 0 35%);
+      opacity: 0.5;
+    }
+
+    /* 100% KOD CSS ASAL DALAM VIDEO */
+    .campfire-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse 55% 40% at 50% 72%,
+        rgba(255, 140, 50, 0.35) 0%,
+        rgba(255, 90, 20, 0.12) 35%,
+        transparent 70%
+      );
+      animation: ember-pulse 2.8s ease-in-out infinite;
+    }
+
+    @keyframes ember-pulse {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50%      { opacity: 1;    transform: scale(1.04); }
+    }
+
+    /* Canvas Ungkit Api & Spark Interactive */
+    canvas {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    /* Teks "CLICK THE FIRE" */
+    .click-hint {
+      position: absolute;
+      bottom: 22%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 200, 150, 0.6);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      font-weight: bold;
+      pointer-events: none;
+      z-index: 5;
+      animation: fadeInOut 2s infinite alternate;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0.3; }
+      100% { opacity: 0.9; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="forest"></div>
+    <div class="campfire-glow"></div>
+    <div class="click-hint">CLICK THE FIRE</div>
+    <canvas id="fireCanvas"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('fireCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    // Koordinat unggun api di tengah bawah
+    const fireOrigin = {
+      get x() { return width / 2; },
+      get y() { return height * 0.72; }
+    };
+
+    const particles = [];
+    const sparks = [];
+
+    // Class Nyalaan Api (Fire Flames)
+    class FlameParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = fireOrigin.x + (Math.random() - 0.5) * 30;
+        this.y = fireOrigin.y + (Math.random() - 0.5) * 10;
+        this.size = Math.random() * 25 + 15;
+        this.speedY = Math.random() * 3 + 2;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.life = 1;
+        this.decay = Math.random() * 0.03 + 0.015;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        this.size *= 0.95;
+        this.life -= this.decay;
+        if (this.life <= 0 || this.size <= 1) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        
+        // Gradien warna api (Kuning -> Oren -> Merah)
+        const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+        g.addColorStop(0, `rgba(255, 240, 150, ${this.life})`);
+        g.addColorStop(0.4, `rgba(255, 120, 20, ${this.life * 0.8})`);
+        g.addColorStop(1, `rgba(200, 30, 0, 0)`);
+        
+        ctx.fillStyle = g;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Class Spark/Bara Api (Interactive Sparks)
+    class Spark {
+      constructor(x, y, isBurst = false) {
+        this.x = x || fireOrigin.x + (Math.random() - 0.5) * 40;
+        this.y = y || fireOrigin.y;
+        this.size = Math.random() * 2.5 + 1;
+        this.speedY = isBurst ? (Math.random() * 6 + 3) : (Math.random() * 2 + 1);
+        this.speedX = isBurst ? (Math.random() - 0.5) * 6 : (Math.random() - 0.5) * 2;
+        this.opacity = 1;
+        this.decay = Math.random() * 0.02 + 0.005;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX + Math.sin(this.y * 0.05) * 0.5;
+        this.opacity -= this.decay;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.opacity);
+        ctx.fillStyle = '#ffb703';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Cipta 50 nyalaan api awal
+    for (let i = 0; i < 60; i++) {
+      particles.push(new FlameParticle());
+    }
+
+    // Lukis Kayu Unggun Api (Logs)
+    function drawLogs() {
+      ctx.save();
+      ctx.fillStyle = '#2b1704';
+      ctx.strokeStyle = '#140a02';
+      ctx.lineWidth = 3;
+
+      // Kayu 1 (Kiri)
+      ctx.beginPath();
+      ctx.ellipse(fireOrigin.x - 25, fireOrigin.y + 15, 45, 10, -Math.PI / 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Kayu 2 (Kanan)
+      ctx.beginPath();
+      ctx.ellipse(fireOrigin.x + 25, fireOrigin.y + 15, 45, 10, Math.PI / 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // Interactive Click/Touch Event (Tambah percikan bara api bila diklik)
+    window.addEventListener('click', (e) => {
+      for (let i = 0; i < 35; i++) {
+        sparks.push(new Spark(fireOrigin.x, fireOrigin.y, true));
+      }
+    });
+
+    // Main Animation Loop
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Lukis kayu di tapak
+      drawLogs();
+
+      // Render Nyalaan Api
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      // Jana bara api biasa secara berterusan
+      if (Math.random() < 0.4) {
+        sparks.push(new Spark());
+      }
+
+      // Render & kemaskini Bara Api (Sparks)
+      sparks.forEach((s, idx) => {
+        s.update();
+        s.draw();
+        if (s.opacity <= 0) {
+          sparks.splice(idx, 1);
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
