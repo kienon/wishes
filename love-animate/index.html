@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heart Particle Animation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Heart Animation</title>
   <style>
     * {
       margin: 0;
@@ -11,138 +11,158 @@
       box-sizing: border-box;
     }
     body {
-      background-color: #021a19;
+      background-color: #000000;
       overflow: hidden;
+      width: 100vw;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
     }
-    #canvas-container {
-      width: 100vw;
-      height: 100vh;
+    canvas {
       position: absolute;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    /* SVG Path Tersembunyi (digunakan untuk bentuk hati) */
     svg {
       display: none;
     }
   </style>
-  <!-- Library Three.js & GSAP -->
+  <!-- Three.js & GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
 
-  <div id="canvas-container"></div>
-
-  <!-- Shape Hati SVG -->
-  <svg viewBox="0 0 100 100">
-    <path id="heart-path" d="M 50,30 A 20,20 0 0,0 10,50 C 10,75 35,85 50,95 C 65,85 90,75 90,50 A 20,20 0 0,0 50,30 Z" />
+  <!-- SVG Path Hati Presisi -->
+  <svg viewBox="0 0 600 552">
+    <path id="path" d="M300,522 C290,512 40,330 40,180 C40,90 110,30 200,30 C250,30 280,60 300,90 C320,60 350,30 400,30 C490,30 560,90 560,180 C560,330 310,512 300,522 Z"/>
   </svg>
 
   <script>
-    // 1. Setup Scene, Camera & Renderer Three.js
-    const container = document.getElementById('canvas-container');
+    // 1. Setup Three.js Scene, Camera & WebGL Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 100;
+    camera.position.z = 600;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
 
-    // 2. Ambil SVG Heart Path untuk jana koordinat
-    const path = document.querySelector("#heart-path");
+    // 2. Tepat Seperti Kod Dalam Video
+    const path = document.querySelector("#path");
     const length = path.getTotalLength();
-    const numParticles = 2500;
-    
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(numParticles * 3);
-    const targetPositions = [];
-    const colors = new Float32Array(numParticles * 3);
+    const vertices = [];
+    const particlesCount = 2000;
 
-    // Palet warna Teal, Turquoise & Light Green
-    const palette = [
-      new THREE.Color('#2dd4bf'),
-      new THREE.Color('#14b8a6'),
-      new THREE.Color('#a8e6cf'),
-      new THREE.Color('#5eead4')
-    ];
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particlesCount * 3);
+    const colors = new Float32Array(particlesCount * 3);
+
+    // Warna Pink/Magenta Sebiji Macam Video
+    const colorPink = new THREE.Color("#ff1493");
+    const colorLightPink = new THREE.Color("#ffb6c1");
+
+    const tl = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 0.5 });
 
     let i = 0;
-    for (let j = 0; j < numParticles; j++) {
-      const point = path.getPointAtLength((j / numParticles) * length);
+    for (let l = 0; l < length; l += length / particlesCount) {
+      const point = path.getPointAtLength(l);
       
-      // Tukar skala & koordinat SVG ke 3D Space
-      const x = (point.x - 50) * 1.8 + (Math.random() - 0.5) * 3;
-      const y = -(point.y - 55) * 1.8 + (Math.random() - 0.5) * 3;
-      const z = (Math.random() - 0.5) * 10;
+      const vector = new THREE.Vector3(point.x, -point.y, 0);
+      vector.x += (Math.random() - 0.5) * 30;
+      vector.y += (Math.random() - 0.5) * 30;
+      vector.z += (Math.random() - 0.5) * 70;
+      
+      vertices.push(vector);
 
-      targetPositions.push({ x, y, z });
+      // Set Kedudukan Akhir (Target)
+      positions[i * 3] = vector.x - 600 / 2;
+      positions[i * 3 + 1] = vector.y + 552 / 2;
+      positions[i * 3 + 2] = vector.z;
 
-      // Kedudukan asal (di tengah/terkumpul)
-      positions[j * 3] = (Math.random() - 0.5) * 5;
-      positions[j * 3 + 1] = (Math.random() - 0.5) * 5;
-      positions[j * 3 + 2] = (Math.random() - 0.5) * 5;
+      // Warna Rawak Antara Deep Pink & Light Pink
+      const mixedColor = colorPink.clone().lerp(colorLightPink, Math.random());
+      colors[i * 3] = mixedColor.r;
+      colors[i * 3 + 1] = mixedColor.g;
+      colors[i * 3 + 2] = mixedColor.b;
 
-      // Berikan warna variasi Teal/Green
-      const color = palette[Math.floor(Math.random() * palette.length)];
-      colors[j * 3] = color.r;
-      colors[j * 3 + 1] = color.g;
-      colors[j * 3 + 2] = color.b;
+      // Logic GSAP Animation persis kod video:
+      // tl.from(vector, { x: 600 / 2, y: -552 / 2, z: 0, ease: "power2.inOut", duration: "random(2, 5)" }, i * 0.002)
+      const currentIdx = i;
+      const startX = 0;
+      const startY = 0;
+      const startZ = 0;
+      const targetX = positions[currentIdx * 3];
+      const targetY = positions[currentIdx * 3 + 1];
+      const targetZ = positions[currentIdx * 3 + 2];
+
+      // Mula dari titik tengah (Center)
+      positions[currentIdx * 3] = startX;
+      positions[currentIdx * 3 + 1] = startY;
+      positions[currentIdx * 3 + 2] = startZ;
+
+      tl.to(positions, {
+        [currentIdx * 3]: targetX,
+        [currentIdx * 3 + 1]: targetY,
+        [currentIdx * 3 + 2]: targetZ,
+        duration: gsap.utils.random(2, 4),
+        ease: "power2.inOut",
+        onUpdate: () => {
+          geometry.attributes.position.needsUpdate = true;
+        }
+      }, i * 0.0015);
+
+      i++;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // 3. Material Partikel
+    // Material Partikel (Glowing Soft Pink)
     const material = new THREE.PointsMaterial({
-      size: 1.2,
+      size: 4,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending
     });
 
     const particleSystem = new THREE.Points(geometry, material);
     scene.add(particleSystem);
 
-    // 4. Animasi GSAP (Sama seperti paparan kod dalam video)
-    const tl = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 1 });
+    // Dynamic Auto-Fit untuk SEMUA Skrin (Mobile, Tablet, Monitor)
+    function adjustScale() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
 
-    const posAttr = geometry.attributes.position;
+      // Auto Adjust Jarak Kamera Mengikut Saiz Skrin
+      if (width < 600) {
+        camera.position.z = 850; // Skrin Telefon
+      } else if (width < 1024) {
+        camera.position.z = 700; // Skrin Tablet
+      } else {
+        camera.position.z = 600; // Skrin Desktop
+      }
+    }
 
-    targetPositions.forEach((target, index) => {
-      tl.to(posAttr.array, {
-        [index * 3]: target.x,
-        [index * 3 + 1]: target.y,
-        [index * 3 + 2]: target.z,
-        duration: 2.5,
-        ease: "power2.inOut",
-        onUpdate: () => {
-          posAttr.needsUpdate = true;
-        }
-      }, index * 0.0008); // Delay mengikut urutan pusingan
-    });
+    window.addEventListener('resize', adjustScale);
+    adjustScale();
 
-    // 5. Render Loop
+    // Render Loop
     function animate() {
       requestAnimationFrame(animate);
-      particleSystem.rotation.y += 0.002; // Pusingan halus
       renderer.render(scene, camera);
     }
     animate();
-
-    // Responsive Canvas
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
   </script>
 </body>
 </html>
