@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be Mine? ❤️</title>
+  <!-- Google Fonts & Canvas Confetti Library -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      /* Soft pink, red, and purple gradient background */
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating Background Particle Canvas */
+    #particleCanvas, #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    #fireworksCanvas { z-index: 2; }
+
+    /* Glassmorphism Container Card */
+    .proposal-card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 30px;
+      padding: 40px 30px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(255, 77, 109, 0.3);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Glowing Heart with Heartbeat Animation */
+    .center-heart {
+      font-size: 80px;
+      display: inline-block;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 25px #ff4d6d);
+      animation: heartbeat 1.2s infinite alternate ease-in-out;
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.25); filter: drop-shadow(0 0 40px #ff1493); }
+    }
+
+    /* Proposal Text */
+    h1.proposal-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: #d63031;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Button Area */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      min-height: 80px;
+      position: relative;
+    }
+
+    /* 3D Glassmorphism Styled Buttons */
+    .btn {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+      outline: none;
+    }
+
+    .btn-yes {
+      background: linear-gradient(45deg, #ff4d6d, #ff758f);
+      color: #fff;
+      z-index: 12;
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(255, 77, 109, 0.5);
+    }
+
+    .btn-no {
+      background: linear-gradient(45deg, #6c757d, #adb5bd);
+      color: #fff;
+      position: absolute;
+      right: 20px;
+      z-index: 11;
+    }
+
+    /* Celebration State Overlay */
+    .celebration-box {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: zoomIn 0.8s ease forwards;
+    }
+
+    @keyframes zoomIn {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .celebration-text-1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: #ff1493;
+      margin-bottom: 5px;
+    }
+
+    .celebration-text-2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #4a0e17;
+      margin-bottom: 20px;
+    }
+
+    /* CSS Animated 3D Teddy Bear */
+    .teddy-bear {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 10px auto;
+      animation: floatTeddy 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatTeddy {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .teddy-head {
+      width: 80px;
+      height: 70px;
+      background: #b07d62;
+      border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      box-shadow: inset -4px -4px 10px rgba(0,0,0,0.2);
+    }
+    .teddy-ear {
+      width: 25px;
+      height: 25px;
+      background: #b07d62;
+      border-radius: 50%;
+      position: absolute;
+      top: 5px;
+    }
+    .teddy-ear.left { left: 15px; }
+    .teddy-ear.right { right: 15px; }
+    .teddy-snout {
+      width: 35px;
+      height: 25px;
+      background: #eddcd2;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 10px;
+      left: 22.5px;
+    }
+    .teddy-eye {
+      width: 8px;
+      height: 8px;
+      background: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 25px;
+    }
+    .teddy-eye.left { left: 25px; }
+    .teddy-eye.right { right: 25px; }
+    .teddy-heart-held {
+      position: absolute;
+      bottom: -10px;
+      left: 10px;
+      width: 100px;
+      padding: 8px 0;
+      background: #ff4d6d;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio Player (Optional Audio) -->
+  <audio id="romanticMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Canvases for Background Animation & Explosions -->
+  <canvas id="particleCanvas"></canvas>
+  <canvas id="fireworksCanvas"></canvas>
+
+  <!-- Proposal Glass Container -->
+  <div class="proposal-card" id="cardContainer">
+    
+    <!-- MAIN PROPOSAL INTERFACE -->
+    <div id="proposalContent">
+      <div class="center-heart" id="centerHeart">💖</div>
+      <h1 class="proposal-text">Will You Be Mine? ❤️</h1>
+      
+      <div class="btn-container">
+        <button class="btn btn-yes" id="yesBtn" onclick="celebrateLove()">💖 YES, I LOVE YOU</button>
+        <button class="btn btn-no" id="noBtn">😅 NO</button>
+      </div>
+    </div>
+
+    <!-- CELEBRATION INTERFACE (HIDDEN INITIALLY) -->
+    <div class="celebration-box" id="celebrationBox">
+      <div class="celebration-text-1">Yay! ❤️ You Made My Day!</div>
+      <div class="celebration-text-2">I Love You Forever 💕</div>
+      
+      <!-- Animated CSS Teddy Bear holding a heart -->
+      <div class="teddy-bear">
+        <div class="teddy-ear left"></div>
+        <div class="teddy-ear right"></div>
+        <div class="teddy-head">
+          <div class="teddy-eye left"></div>
+          <div class="teddy-eye right"></div>
+          <div class="teddy-snout"></div>
+        </div>
+        <div class="teddy-heart-held">Forever Together ❤️</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ==========================================
+       1. CONTINUOUS FLOATING HEARTS & ROSES CANVAS
+       ========================================== */
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const symbols = ['❤️', '💖', '💕', '🌹', '✨', '🌸'];
+
+    class FloatingParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = height + 20;
+        this.size = Math.random() * 20 + 15;
+        this.speedY = Math.random() * 1.5 + 0.8;
+        this.speedX = Math.sin(this.y) * 0.5;
+        this.symbol = symbols[Math.floor(Math.random() * symbols.length)];
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += Math.sin(this.y * 0.02);
+        if (this.y < -30) this.reset();
+      }
+      draw() {
+        ctx.globalAlpha = this.opacity;
+        ctx.font = `${this.size}px Arial`;
+        ctx.fillText(this.symbol, this.x, this.y);
+      }
+    }
+
+    for (let i = 0; i < 40; i++) particles.push(new FloatingParticle());
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    /* ==========================================
+       2. EVASIVE "NO" BUTTON BEHAVIOR
+       ========================================== */
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    let failedAttempts = 0;
+    const maxAttempts = 12;
+
+    function moveNoButton() {
+      failedAttempts++;
+
+      // Make Yes Button progressively larger
+      const currentScale = 1 + (failedAttempts * 0.08);
+      yesBtn.style.transform = `scale(${currentScale})`;
+
+      // If attempts reach limit, hide NO button & center YES button
+      if (failedAttempts >= maxAttempts) {
+        noBtn.style.display = 'none';
+        yesBtn.style.transform = 'scale(1.4)';
+        return;
+      }
+
+      // Calculate random safe coordinates across viewport
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+      
+      const padding = 50;
+      const randomX = Math.random() * (width - btnWidth - padding * 2) + padding;
+      const randomY = Math.random() * (height - btnHeight - padding * 2) + padding;
+
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    }
+
+    // Trigger on both Hover (Desktop) and Touch (Mobile)
+    noBtn.addEventListener('mouseover', moveNoButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    /* ==========================================
+       3. YES BUTTON CELEBRATION & FIREWORKS
+       ========================================== */
+    function celebrateLove() {
+      // Play Background Romantic Music
+      const music = document.getElementById('romanticMusic');
+      music.play().catch(() => console.log("Audio autoplay restricted."));
+
+      // Switch UI state
+      document.getElementById('proposalContent').style.display = 'none';
+      document.getElementById('celebrationBox').style.display = 'flex';
+
+      // Grow glass card with glowing pulse
+      const card = document.getElementById('cardContainer');
+      card.style.transform = 'scale(1.1)';
+      card.style.boxShadow = '0 30px 70px rgba(255, 20, 147, 0.6)';
+
+      // Launch Massive Confetti & Hearts
+      launchConfetti();
+      startFireworks();
+    }
+
+    // Canvas Confetti Plugin Implementation
+    function launchConfetti() {
+      const duration = 5 * 1000;
+      const animationEnd = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 7,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ff4d6d', '#ff758f', '#ffffff']
+        });
+        confetti({
+          particleCount: 7,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ff4d6d', '#ff758f', '#ffffff']
+        });
+
+        if (Date.now() < animationEnd) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+
+    /* Simple Canvas Fireworks Effect */
+    const fwCanvas = document.getElementById('fireworksCanvas');
+    const fwCtx = fwCanvas.getContext('2d');
+    fwCanvas.width = window.innerWidth;
+    fwCanvas.height = window.innerHeight;
+
+    let fireworks = [];
+
+    function startFireworks() {
+      setInterval(() => {
+        fireworks.push(new Firework());
+      }, 400);
+      animateFireworks();
+    }
+
+    class Firework {
+      constructor() {
+        this.x = Math.random() * fwCanvas.width;
+        this.y = fwCanvas.height;
+        this.targetY = Math.random() * (fwCanvas.height * 0.5);
+        this.speed = Math.random() * 5 + 5;
+        this.particles = [];
+        this.exploded = false;
+      }
+      update() {
+        if (!this.exploded) {
+          this.y -= this.speed;
+          if (this.y <= this.targetY) {
+            this.exploded = true;
+            for (let i = 0; i < 50; i++) {
+              this.particles.push(new Spark(this.x, this.y));
+            }
+          }
+        } else {
+          this.particles.forEach(p => p.update());
+        }
+      }
+      draw() {
+        if (!this.exploded) {
+          fwCtx.fillStyle = '#ff1493';
+          fwCtx.beginPath();
+          fwCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          fwCtx.fill();
+        } else {
+          this.particles.forEach(p => p.draw());
+        }
+      }
+    }
+
+    class Spark {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.angle = Math.random() * Math.PI * 2;
+        this.speed = Math.random() * 4 + 1;
+        this.friction = 0.95;
+        this.gravity = 0.05;
+        this.opacity = 1;
+        this.color = `hsl(${Math.random() * 60 + 330}, 100%, 60%)`;
+      }
+      update() {
+        this.speed *= this.friction;
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed + this.gravity;
+        this.opacity -= 0.015;
+      }
+      draw() {
+        fwCtx.globalAlpha = Math.max(0, this.opacity);
+        fwCtx.fillStyle = this.color;
+        fwCtx.beginPath();
+        fwCtx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+        fwCtx.fill();
+      }
+    }
+
+    function animateFireworks() {
+      fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+      fireworks.forEach((fw, index) => {
+        fw.update();
+        fw.draw();
+        if (fw.exploded && fw.particles.every(p => p.opacity <= 0)) {
+          fireworks.splice(index, 1);
+        }
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+  </script>
+</body>
+</html>
