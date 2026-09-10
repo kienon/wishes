@@ -1,537 +1,427 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>For My Baby Aina ❤️</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Happy Birthday My Baby Aina ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
 
-    html, body {
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+        }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle at center, #008080, #042f2e, #021a19);
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      position: relative;
-      padding: 20px 10px;
-    }
+        /* --- MATRIX RAIN LAYER --- */
+        #matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-    /* PARTIKEL HATI GUGUR */
-    .heart-particle {
-      position: fixed;
-      top: -20px;
-      pointer-events: none;
-      z-index: 1;
-      animation: fall linear infinite;
-      filter: drop-shadow(0 0 6px rgba(255, 77, 109, 0.8));
-    }
+        /* --- TEXT SEQUENCE LAYER --- */
+        #text-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            pointer-events: none;
+        }
 
-    @keyframes fall {
-      0% { transform: translateY(-5vh) rotate(0deg) scale(0.8); opacity: 1; }
-      100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
+        .huge-text {
+            font-size: 5rem;
+            font-weight: 700;
+            color: #ff69b4;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+            opacity: 0;
+            transform: scale(0.5);
+        }
 
-    /* --- PASSCODE SCREEN OVERLAY --- */
-    #passcodeScreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #021a19;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 999999;
-      padding: 20px;
-    }
+        /* --- STARRY BACKGROUND LAYER --- */
+        #stars-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%);
+            opacity: 0;
+            z-index: 0;
+        }
 
-    .passcode-title {
-      font-family: 'Dancing Script', cursive;
-      color: #2dd4bf;
-      font-size: 2.2rem;
-      margin-bottom: 5px;
-      text-shadow: 0 0 10px rgba(45, 212, 191, 0.4);
-    }
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle infinite alternate;
+        }
 
-    .passcode-sub {
-      color: #99f6e4;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 25px;
-    }
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
 
-    .dots-container {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
+        /* --- BEAR ANIMATION LAYER --- */
+        #bear-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            flex-direction: column;
+        }
 
-    .dot {
-      width: 16px;
-      height: 16px;
-      border: 2px solid #2dd4bf;
-      border-radius: 50%;
-      transition: all 0.2s ease;
-    }
+        .bear-emoji {
+            font-size: 8rem;
+            animation: bounce 1s infinite alternate ease-in-out;
+        }
 
-    .dot.filled {
-      background: #ff4d6d;
-      border-color: #ff4d6d;
-      box-shadow: 0 0 12px #ff4d6d;
-    }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
 
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      width: 100%;
-      max-width: 280px;
-    }
+        /* --- ENVELOPE LAYER --- */
+        #envelope-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4;
+            cursor: pointer;
+        }
 
-    .key {
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-      background: rgba(20, 184, 166, 0.12);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      color: #fff;
-      font-size: 1.4rem;
-      font-weight: 600;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: auto;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
+        .envelope-card {
+            background: #fff;
+            width: 250px;
+            height: 350px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            color: #333;
+        }
 
-    .key:active {
-      background: #2dd4bf;
-      color: #042f2e;
-      transform: scale(0.92);
-    }
+        .envelope-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
 
-    .hint-text {
-      margin-top: 30px;
-      color: #80cbc4;
-      font-size: 0.8rem;
-      letter-spacing: 0.5px;
-    }
+        .tap-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ff69b4;
+            animation: pulseText 1.5s infinite alternate;
+        }
 
-    /* --- KAD UTAMA (GLASSMORPHISM) --- */
-    .card {
-      display: none;
-      background: rgba(20, 184, 166, 0.12);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 24px;
-      padding: 25px 20px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(20, 184, 166, 0.2);
-      z-index: 10;
-      margin: auto;
-      animation: fadeIn 0.8s ease;
-    }
+        @keyframes pulseText {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        /* --- POLAROID GALLERY LAYER --- */
+        #polaroid-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            cursor: pointer;
+            perspective: 1000px;
+        }
 
-    h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.2rem;
-      background: linear-gradient(45deg, #a7f3d0, #2dd4bf, #f43f5e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 2px;
-    }
+        .polaroid {
+            background: #fff;
+            padding: 15px 15px 40px 15px;
+            border-radius: 5px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: absolute;
+            display: none;
+            max-width: 85%;
+        }
 
-    .subtitle {
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      color: #99f6e4;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 18px;
-    }
+        .polaroid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
 
-    /* POLAROID FRAME & SLIDESHOW */
-    .polaroid-frame {
-      background: #ffffff;
-      padding: 10px 10px 32px 10px;
-      border-radius: 12px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-      transform: rotate(-1.5deg);
-      position: relative;
-      margin: 0 auto;
-      max-width: 320px;
-      transition: transform 0.3s ease;
-    }
+        .polaroid-caption {
+            color: #333;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            text-align: center;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            font-weight: bold;
+        }
 
-    .polaroid-frame:hover {
-      transform: rotate(0deg) scale(1.02);
-    }
+        /* --- FINAL HEART FORMATION LAYER --- */
+        #heart-formation-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 6;
+        }
 
-    .slideshow-container {
-      position: relative;
-      width: 100%;
-      height: 260px;
-      border-radius: 6px;
-      overflow: hidden;
-      background: #111;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transform: scale(1.1);
-      transition: opacity 1.5s ease, transform 4s ease;
-    }
-
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .polaroid-caption {
-      position: absolute;
-      bottom: 6px;
-      left: 0;
-      width: 100%;
-      color: #333;
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-
-    /* MESEJ UCAPAN */
-    .love-message {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 20px 0 15px 0;
-      color: #e6fffa;
-      text-align: left;
-    }
-
-    .love-message p {
-      margin-bottom: 10px;
-    }
-
-    .highlight {
-      color: #ff4d6d;
-      font-weight: 600;
-    }
-
-    /* DIGITAL BOUQUET */
-    .bouquet-section {
-      background: rgba(45, 212, 191, 0.1);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 16px;
-      padding: 14px;
-      margin: 18px 0;
-    }
-
-    .bouquet-title {
-      font-size: 0.8rem;
-      color: #99f6e4;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .flowers-container {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      font-size: 2rem;
-      margin: 8px 0;
-    }
-
-    .flower-item {
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .flower-item:active {
-      transform: scale(1.3);
-    }
-
-    .flower-note {
-      background: rgba(2, 26, 25, 0.7);
-      border: 1px dashed #2dd4bf;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 0.85rem;
-      color: #ff758f;
-      min-height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 500;
-    }
-
-    /* COUNTDOWN TIMER BOX */
-    .timer-container {
-      background: rgba(45, 212, 191, 0.15);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 16px;
-      padding: 12px;
-      margin-top: 15px;
-    }
-
-    .timer-title {
-      font-size: 0.75rem;
-      color: #99f6e4;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-    }
-
-    .timer {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #5eead4;
-    }
-
-    .bday-mode {
-      color: #ff4d6d !important;
-      font-size: 1.1rem !important;
-      line-height: 1.5;
-      animation: pulse 1s infinite alternate;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.03); }
-    }
-  </style>
+        .mini-pic {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Audio Player (Lagu Latar) -->
-  <audio id="bg-music" loop preload="auto">
-    <source src="lagu.mp3" type="audio/mpeg">
-  </audio>
+    <!-- Lagu Latar (Autoplay dihandle oleh interaksi user nanti) -->
+    <audio id="bg-music" loop>
+        <source src="lagu.mp3" type="audio/mpeg">
+    </audio>
 
-  <!-- PASSCODE SCREEN OVERLAY -->
-  <div id="passcodeScreen">
-    <div class="passcode-title">For My Baby Aina ❤️</div>
-    <div class="passcode-sub">Enter Secret Passcode</div>
+    <div id="stars-bg"></div>
+    <canvas id="matrix-canvas"></canvas>
 
-    <div class="dots-container">
-      <div class="dot" id="dot0"></div>
-      <div class="dot" id="dot1"></div>
-      <div class="dot" id="dot2"></div>
-      <div class="dot" id="dot3"></div>
-      <div class="dot" id="dot4"></div>
-      <div class="dot" id="dot5"></div>
+    <div id="text-layer">
+        <div class="huge-text" id="center-text"></div>
     </div>
 
-    <div class="keypad">
-      <div class="key" onclick="pressKey('1')">1</div>
-      <div class="key" onclick="pressKey('2')">2</div>
-      <div class="key" onclick="pressKey('3')">3</div>
-      <div class="key" onclick="pressKey('4')">4</div>
-      <div class="key" onclick="pressKey('5')">5</div>
-      <div class="key" onclick="pressKey('6')">6</div>
-      <div class="key" onclick="pressKey('7')">7</div>
-      <div class="key" onclick="pressKey('8')">8</div>
-      <div class="key" onclick="pressKey('9')">9</div>
-      <div class="key" onclick="pressKey('C')">✕</div>
-      <div class="key" onclick="pressKey('0')">0</div>
-      <div class="key" onclick="pressKey('OK')">➔</div>
+    <div id="bear-layer">
+        <div class="bear-emoji">🐻🎂</div>
+        <h2 style="color: #ff69b4; font-family: 'Dancing Script', cursive; font-size: 3rem; margin-top: 10px;">Happy Birthday!</h2>
     </div>
 
-    <div class="hint-text">Passcode Hint: Tarikh Lahir Baby (DDMMYY) 💡</div>
-  </div>
-
-  <!-- KAD UTAMA SELEPAS PASSCODE BETUL -->
-  <div class="card" id="mainCard">
-    <h1>Khas Untuk Tunang Saya ❤️</h1>
-    <div class="subtitle">My Baby Aina</div>
-
-    <div class="polaroid-frame">
-      <div class="slideshow-container">
-        <img class="slide active" src="gambar1.jpg" alt="Dating 1">
-        <img class="slide" src="gambar2.jpg" alt="Dating 2">
-        <img class="slide" src="gambar3.jpg" alt="Dating 3">
-        <img class="slide" src="gambar4.jpg" alt="Dating 4">
-      </div>
-      <div class="polaroid-caption">Our Special Moments 📸</div>
+    <div id="envelope-layer">
+        <div class="envelope-card">
+            <div class="envelope-icon">🤲❤️</div>
+            <div class="tap-text">Tap to Open</div>
+        </div>
     </div>
 
-    <!-- Mesej Ucapan -->
-    <div class="love-message">
-      <p>baby, b nda pandai sangat susun ayat manis. Tapi setiap kali tengok gambar-gambar kita kann yang p dating, b rasa bersyukur betul dapat kenal dan ada tunang macam <span class="highlight">Baby</span>.</p>
-      <p>Thanks ya selalu buat hari-hari b semakin bermakna. I love you so much, baby! 💖</p>
+    <div id="polaroid-layer">
+        <!-- Tukar gambar1.jpg - gambar4.jpg dengan gambar korang -->
+        <div class="polaroid">
+            <img src="gambar1.jpg" alt="Photo 1">
+            <div class="polaroid-caption">Happy Birthday Sayang 🤍</div>
+        </div>
+        <div class="polaroid">
+            <img src="gambar2.jpg" alt="Photo 2">
+            <div class="polaroid-caption">As long as you're smilin...</div>
+        </div>
+        <div class="polaroid">
+            <img src="gambar3.jpg" alt="Photo 3">
+            <div class="polaroid-caption">I'm happy. Stay happy my love ✨</div>
+        </div>
+        <div class="polaroid">
+            <img src="gambar4.jpg" alt="Photo 4">
+            <div class="polaroid-caption">I love you, My Baby Aina 💖</div>
+        </div>
     </div>
 
-    <!-- Digital Bouquet Interaktif -->
-    <div class="bouquet-section">
-      <div class="bouquet-title">A Digital Bouquet For You 💐</div>
-      <div class="flowers-container">
-        <span class="flower-item" onclick="showNote('Senyuman baby penawar penat b selalu! 🌸')">🌸</span>
-        <span class="flower-item" onclick="showNote('Terima kasih sebab sentiasa faham b. 🌹')">🌹</span>
-        <span class="flower-item" onclick="showNote('Makin hari b makin sayang baby! 🌻')">🌻</span>
-        <span class="flower-item" onclick="showNote('You are my sun and my star! ✨🌷')">🌷</span>
-      </div>
-      <div class="flower-note" id="flowerNote">Tekan mana-mana bunga di atas... 💌</div>
-    </div>
+    <div id="heart-formation-layer"></div>
 
-    <!-- Countdown Timer Box -->
-    <div class="timer-container">
-      <div id="timerTitle" class="timer-title">Tunggu Tarikh Lahir Baby... 🎂</div>
-      <div id="countdown" class="timer">Membaca masa...</div>
-    </div>
-  </div>
+    <script>
+        // --- 1. MATRIX DIGITAL RAIN EFFECT ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-  <script>
-    // 1. Passcode System
-    const SECRET_CODE = "260900"; // Passcode: 26 Sept 2000
-    let enteredCode = "";
+        const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*'.split('');
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for (let x = 0; x < columns; x++) drops[x] = 1;
 
-    function pressKey(val) {
-      if (val === 'C') {
-        enteredCode = "";
-      } else if (val === 'OK') {
-        checkCode();
-        return;
-      } else {
-        if (enteredCode.length < 6) {
-          enteredCode += val;
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ff69b4';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
         }
-      }
-      updateDots();
+        let matrixInterval = setInterval(drawMatrix, 35);
 
-      if (enteredCode.length === 6) {
-        setTimeout(checkCode, 150);
-      }
-    }
-
-    function updateDots() {
-      for (let i = 0; i < 6; i++) {
-        const dot = document.getElementById(`dot${i}`);
-        if (i < enteredCode.length) {
-          dot.classList.add('filled');
-        } else {
-          dot.classList.remove('filled');
-        }
-      }
-    }
-
-    function checkCode() {
-      if (enteredCode === SECRET_CODE) {
-        document.getElementById('passcodeScreen').style.display = 'none';
-        document.getElementById('mainCard').style.display = 'block';
-
-        // Mainkan lagu latar bila passcode betul
-        const music = document.getElementById('bg-music');
-        if (music) {
-          music.play().catch(err => console.log("Audio play blocked by browser."));
-        }
-      } else {
-        alert("Passcode salah baby, cuba lagi! 💖 (Hint: 260900)");
-        enteredCode = "";
-        updateDots();
-      }
-    }
-
-    // 2. Interactive Bouquet Logic
-    function showNote(text) {
-      document.getElementById('flowerNote').innerHTML = text;
-    }
-
-    // 3. Slideshow Control
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-
-    if (slides.length > 0) {
-      setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 3500);
-    }
-
-    // 4. Floating Hearts Generator
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-particle');
-      const heartsList = ['💖', '❤️', '✨', '💕', '🌸'];
-      heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
-      
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-      heart.style.fontSize = Math.random() * 18 + 12 + 'px';
-      
-      document.body.appendChild(heart);
-
-      setTimeout(() => { heart.remove(); }, 6000);
-    }
-    setInterval(createHeart, 300);
-
-    // 5. Automatic Countdown & Birthday Mode (26 September)
-    function updateCountdown() {
-      const now = new Date();
-      const currentYear = now.getFullYear();
-      let birthday = new Date(currentYear, 8, 26, 0, 0, 0); // 8 = September
-
-      const countElem = document.getElementById("countdown");
-      const titleElem = document.getElementById("timerTitle");
-
-      // Jika harini 26 September
-      if (now.getMonth() === 8 && now.getDate() === 26) {
-        titleElem.innerHTML = "HARI NI HARI ISTIMEWA BABY! 🥳✨";
-        countElem.innerHTML = "Selamat Ulang Tahun Lahir Tunang B! Terima kasih sebab hadir ke hidup b. Semoga panjang umur, murah rezeki, makin cantik... muahhh🥰😘💖🌸";
-        countElem.classList.add("bday-mode");
-      } 
-      else {
-        let diff = birthday - now;
-        if (diff < 0) {
-          birthday = new Date(currentYear + 1, 8, 26, 0, 0, 0);
-          diff = birthday - now;
+        // --- 2. GENERATE STARS BACKGROUND ---
+        const starsBg = document.getElementById('stars-bg');
+        for(let i=0; i<100; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            starsBg.appendChild(star);
         }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        // --- 3. COUNTDOWN & TEXT SEQUENCE TIMELINE ---
+        const words = ['3', '2', '1', 'HAPPY', 'BIRTHDAY', 'TO', 'AINA', '❤️'];
+        let wordIndex = 0;
+        const textElement = document.getElementById('center-text');
 
-        if (countElem) {
-          countElem.innerHTML = `${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat`;
+        function animateNextWord() {
+            if (wordIndex < words.length) {
+                textElement.innerText = words[wordIndex];
+                gsap.fromTo(textElement, 
+                    { scale: 0.2, opacity: 0 }, 
+                    { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)",
+                      onComplete: () => {
+                          gsap.to(textElement, { scale: 1.5, opacity: 0, duration: 0.4, delay: 0.2, onComplete: animateNextWord });
+                      }
+                    }
+                );
+                wordIndex++;
+            } else {
+                transitionToStars();
+            }
         }
-      }
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+        
+        setTimeout(animateNextWord, 1000); // Start selepas 1 saat
+
+        // --- 4. TRANSITION KE BINTANG & BERUANG ---
+        function transitionToStars() {
+            clearInterval(matrixInterval);
+            gsap.to(canvas, { opacity: 0, duration: 1 });
+            gsap.to(starsBg, { opacity: 1, duration: 1 });
+            
+            const bearLayer = document.getElementById('bear-layer');
+            bearLayer.style.display = 'flex';
+            gsap.fromTo(bearLayer, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: "elastic.out(1, 0.5)" });
+
+            setTimeout(() => {
+                gsap.to(bearLayer, { scale: 0, opacity: 0, duration: 0.8, onComplete: showEnvelope });
+            }, 3500);
+        }
+
+        // --- 5. ENVELOPE INTERACTION ---
+        function showEnvelope() {
+            const envLayer = document.getElementById('envelope-layer');
+            envLayer.style.display = 'flex';
+            gsap.fromTo(envLayer.children[0], { y: 200, opacity: 0, rotation: 10 }, { y: 0, opacity: 1, rotation: 0, duration: 0.8, ease: "back.out(1.2)" });
+            
+            // Try to play music at this stage
+            document.getElementById('bg-music').play().catch(e => console.log("Audio waiting for interaction"));
+        }
+
+        document.getElementById('envelope-layer').addEventListener('click', function() {
+            document.getElementById('bg-music').play().catch(e => {});
+            gsap.to(this.children[0], { scale: 0, opacity: 0, rotation: -20, duration: 0.5, onComplete: startPolaroids });
+        });
+
+        // --- 6. POLAROID SLIDESHOW ---
+        const polaroids = document.querySelectorAll('.polaroid');
+        let currentPol = 0;
+        
+        function startPolaroids() {
+            document.getElementById('envelope-layer').style.display = 'none';
+            document.getElementById('polaroid-layer').style.display = 'flex';
+            showNextPolaroid();
+        }
+
+        function showNextPolaroid() {
+            if (currentPol > 0) {
+                // Swipe out previous
+                gsap.to(polaroids[currentPol - 1], { x: -window.innerWidth, opacity: 0, rotation: -15, duration: 0.6, ease: "power2.in" });
+            }
+            if (currentPol < polaroids.length) {
+                // Pop in next
+                polaroids[currentPol].style.display = 'block';
+                gsap.fromTo(polaroids[currentPol], 
+                    { x: window.innerWidth, opacity: 0, rotation: 15 }, 
+                    { x: 0, opacity: 1, rotation: (Math.random() - 0.5) * 8, duration: 0.8, ease: "back.out(1)" }
+                );
+                currentPol++;
+            } else {
+                document.getElementById('polaroid-layer').style.display = 'none';
+                formHeartGallery();
+            }
+        }
+
+        document.getElementById('polaroid-layer').addEventListener('click', showNextPolaroid);
+
+        // --- 7. FINAL HEART SHAPE FORMATION ---
+        function formHeartGallery() {
+            const heartLayer = document.getElementById('heart-formation-layer');
+            heartLayer.style.display = 'block';
+            
+            const totalImages = 45;
+            const imagesList = ['gambar1.jpg', 'gambar2.jpg', 'gambar3.jpg', 'gambar4.jpg'];
+            
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2.2;
+            const scale = Math.min(window.innerWidth, window.innerHeight) / 35; // Responsive scale
+
+            for (let i = 0; i < totalImages; i++) {
+                let imgDiv = document.createElement('div');
+                imgDiv.className = 'mini-pic';
+                imgDiv.style.backgroundImage = `url(${imagesList[i % imagesList.length]})`;
+                heartLayer.appendChild(imgDiv);
+
+                // Heart Math Formula
+                let t = (i / totalImages) * Math.PI * 2;
+                let x = 16 * Math.pow(Math.sin(t), 3) * scale;
+                let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)) * scale;
+
+                // Animate flying from center to heart shape
+                gsap.fromTo(imgDiv, 
+                    { left: centerX - 25 + "px", top: centerY - 25 + "px", scale: 0, opacity: 0, rotation: Math.random() * 360 },
+                    { left: (centerX + x - 25) + "px", top: (centerY + y - 25) + "px", scale: 1, opacity: 1, rotation: (Math.random() - 0.5) * 20, duration: 1.5, ease: "power3.out", delay: Math.random() * 1.5 }
+                );
+            }
+        }
+    </script>
 </body>
 </html>
