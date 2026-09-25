@@ -413,6 +413,13 @@
       if (enteredCode === SECRET_CODE) {
         document.getElementById('passcodeScreen').style.display = 'none';
         document.getElementById('mainCard').style.display = 'block';
+
+        // Play audio selepas passcode betul
+        const music = document.getElementById('backgroundMusic');
+        music.volume = 0.7;
+        music.play().catch(function(error) {
+          console.log('Audio playback blocked:', error);
+        });
       } else {
         alert("Passcode salah baby, cuba lagi! 💖 (Hint: 260900)");
         enteredCode = "";
